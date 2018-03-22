@@ -1,0 +1,29 @@
+models:
+   image: tp33/django
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+      - "6000:50"
+   volumes:
+      - ./microservices:/app
+   command: bash -c "python manage.py makemigrations microapp; python manage.py migrate; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/microservices/wsgi.py"
+
+# exp:
+#    image: tp33/django
+#    links:
+#       - models:models-api
+#    ports:
+#       - "8002:8000"
+#    volumes:
+#       - ./expLayer:/app
+#    command: "mod_wsgi-express start-server --reload-on-changes /app/expLayer/wsgi.py"
+
+# web:
+#    image: tp33/django
+#
+#    ports:
+#       - "8000:8000"
+#    volumes:
+#       - ./app/marketplace:/app
+#    command: bash -c "mod_wsgi-express start-server --reload-on-changes /app/marketplace/marketplace/wsgi.py"
