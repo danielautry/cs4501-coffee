@@ -32,7 +32,6 @@ def createCoffeeProduct(request):
         price = request.POST.get('price')
         coffeeProd = CoffeeProduct.objects.create(price = price, coffeeType = coffeeType)
         coffeeProd.save()
-        #return HttpResponse("Heyyy")
         return JsonResponse(model_to_dict(coffeeProd))
     return HttpResponse("createCoffeeProduct Failed")
 
@@ -81,23 +80,13 @@ def destroyCustomer(request, num):
 
 def viewSale(request, num):
     try:
-        #purchase = get_object_or_404(Sale, pk = num)
         purchase = Sale.objects.get(pk = num)
-        #purchase = Sale.objects.all().values('salesman' , 'amount', 'customer', 'coffeeProduct')
-        #sale_list = list(purchase)
         if request.method == "POST":
             purchase.amount = request.POST.get('newAmount')
             purchase.save()
         data1 = serializers.serialize('json', [purchase,])
         struct = json.loads(data1)
         data1 = json.dumps(struct[0])
-        # data = {
-        #     "Name" : purchase.salesman,
-        #     "Email" : purchase.amount,
-        #     "Card Number" : purchase.customer,
-        #     "CP" : purchase.coffeeProduct
-        # }
-        #return JsonResponse(data, safe=False)
         return HttpResponse(data1)
     except:
         return JsonResponse({
