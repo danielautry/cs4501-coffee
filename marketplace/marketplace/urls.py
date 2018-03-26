@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    url(r'^coffeeApp/', include('coffeeApp.urls')),
+    url(r'^', include('coffeeApp.urls')),
     url(r'^admin/', admin.site.urls),
+    # staticfiles_urlpatterns()
 ]

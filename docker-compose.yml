@@ -8,24 +8,24 @@ models:
    volumes:
       - ./microservices:/app
    command: bash -c "python manage.py makemigrations microapp; python manage.py migrate; python manage.py loaddata db.json; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/microservices/wsgi.py"
-   #python manage.py loaddata db.json;
-   #
+  #  python manage.py loaddata db.json;
 
-# exp:
-#    image: tp33/django
-#    links:
-#       - models:models-api
-#    ports:
-#       - "8002:8000"
-#    volumes:
-#       - ./expLayer:/app
-#    command: "mod_wsgi-express start-server --reload-on-changes /app/expLayer/wsgi.py"
+exp:
+   image: tp33/django
+   links:
+      - models:models-api
+   ports:
+      - "8002:8000"
+   volumes:
+      - ./expLayer:/app
+   command: bash -c "mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/expLayer/wsgi.py"
 
-# web:
-#    image: tp33/django
-#
-#    ports:
-#       - "8000:8000"
-#    volumes:
-#       - ./app/marketplace:/app
-#    command: bash -c "mod_wsgi-express start-server --reload-on-changes /app/marketplace/marketplace/wsgi.py"
+web:
+   image: tp33/django
+   links:
+      - exp:exp-api
+   ports:
+      - "8000:8000"
+   volumes:
+      - ./marketplace:/app
+   command: bash -c "mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/marketplace/wsgi.py"
