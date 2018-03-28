@@ -5,6 +5,8 @@ from django.http import JsonResponse
 import json
 from django.core import serializers
 from django.template import loader
+import urllib.request
+import urllib.parse
 
 from .models import CoffeeProduct
 # from .microservices.microapp import models as models
@@ -15,6 +17,15 @@ def index(request):
     return HttpResponse(template.render(request))
 
 def showCoffee(request, num):
-    coffee = get_object_or_404(CoffeeProduct, pk=num)
-    return HttpResponse("You're looking at coffee product %s." % num)
-    # return render("It's %s", {'coffeeProd': coffee})
+
+    #coffee = get_object_or_404(CoffeeProduct, pk=num)
+    #print ("About to perform the HTML GET request...")
+
+    req = urllib.request.Request('http://exp-api:8000/coffeeProduct/' + str(num) + '/')
+
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    resp = json.loads(resp_json)
+
+    #return HttpResponse("heyyy")
+    #return render_to_response('coffeeApp/itemDetail.html' , resp)
+    return JsonResponse(resp)
