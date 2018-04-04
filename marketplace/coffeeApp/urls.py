@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^showCoffeeProd/(?P<num>[0-9]+)/', views.showCoffee, name='showCoffee')
+    url(r'^showCoffeeProd/', views.showCoffee, name='showCoffee')
     # url(r'^coffeeProduct/(?P<num>[0-9]+)/',views.viewCoffeeProduct, name = 'viewCoffeeProduct'),
     # url(r'^coffeeProduct/destroy/(?P<num>[0-9]+)/',views.destroyCoffeeProduct, name = 'destroyCoffeeProduct'),
     # url(r'^coffeeProduct/create',views.createCoffeeProduct, name = 'createCoffeeProduct'),

@@ -32,7 +32,8 @@ def createCoffeeProduct(request):
         price = request.POST.get('price')
         coffeeProd = CoffeeProduct.objects.create(price = price, coffeeType = coffeeType)
         coffeeProd.save()
-        return JsonResponse(model_to_dict(coffeeProd))
+        # return JsonResponse(model_to_dict(coffeeProd))
+        return HttpResponse("Success!")
     return HttpResponse("createCoffeeProduct Failed")
 
 def destroyCoffeeProduct(request, num):

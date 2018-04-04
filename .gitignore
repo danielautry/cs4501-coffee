@@ -1,0 +1,9 @@
+microservices/microapp/__pychache__
+microservices/microapp/migrations
+microservices/db.json
+marketplace/marketplace/__pychache__
+marketplace/coffeeApp/__pychache__
+marketplace/marketplace/migrations
+marketplace/expApp/__pychache__
+marketplace/expApp/migrations
+marketplace/expLayer/__pychache__

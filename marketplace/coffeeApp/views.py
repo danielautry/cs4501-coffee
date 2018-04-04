@@ -14,7 +14,13 @@ def index(request):
     template = loader.get_template('coffeeApp/index.html')
     return HttpResponse(template.render(request))
 
-def showCoffee(request, num):
-    coffee = get_object_or_404(CoffeeProduct, pk=num)
-    return HttpResponse("You're looking at coffee product %s." % num)
-    # return render("It's %s", {'coffeeProd': coffee})
+def showCoffee(request):
+    print ("About to perform the GET request...")
+
+    req = urllib.request.Request('http://exp-api:8000/coffeeProduct/1/')
+
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    resp = json.loads(resp_json)
+
+    return JsonsResponse(resp)
+    # return render("It's %s", {'coffeeType': coffee})
