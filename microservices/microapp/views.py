@@ -16,7 +16,7 @@ def viewCoffeeProduct(request, num):
             coffeeProd.price = request.POST.get('newprice')
             coffeeProd.save()
         data = {
-            "Coffee Product" : coffeeProd.coffeeType,
+            "Coffee_Product" : coffeeProd.coffeeType,
             "Price" : coffeeProd.price
             }
         return JsonResponse(data, safe=False)
