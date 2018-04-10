@@ -13,10 +13,10 @@ def viewCoffeeProduct(request, num):
     try:
         coffeeProd = get_object_or_404(CoffeeProduct, pk = num)
         if request.method == "POST":
-            coffeeProd.price = request.POST.get('newprice')
+            coffeeProd.price = request.POST.get('newPrice')
             coffeeProd.save()
         data = {
-            "Coffee Product" : coffeeProd.coffeeType,
+            "Coffee_Product" : coffeeProd.coffeeType,
             "Price" : coffeeProd.price
             }
         return JsonResponse(data, safe=False)
@@ -49,7 +49,7 @@ def viewCustomer(request, num):
         custObj = Customer.objects.all().values('name', 'email', 'cardNumber')
         cust_list = list(custObj)
         if request.method == "POST":
-            cust.email = request.POST.get('newEmail')
+            cust.cardNumber = request.POST.get('newCardNumber')
             cust.save()
         data = {
             "Name" : cust.name,
@@ -99,13 +99,14 @@ def createSale(request):
     if request.method == "POST":
         salesman = request.POST.get('salesman')
         amount = request.POST.get('amount')
-        customerEmail = request.POST.get('email')
-        coffeeTypeName = request.POST.get('coffeeProduct')
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        coffeeType = request.POST.get('coffeeType')
 
-        cust = Customer.objects.get(email = customerEmail)
-        coffeeType = CoffeeProduct.objects.get(coffeeType= coffeeTypeName)
+        cust = Customer.objects.get(name = name, email = email)
+        coffee = CoffeeProduct.objects.get(coffeeType = coffeeType)
 
-        purchase = Sale.objects.create(salesman = salesman, amount = amount, customer = cust, coffeeProduct = coffeeType)
+        purchase = Sale.objects.create(salesman = salesman, amount = amount, customer = cust, coffeeProduct = coffee)
         purchase.save()
         return HttpResponse(purchase)
     return HttpResponse("createSale Failed")
