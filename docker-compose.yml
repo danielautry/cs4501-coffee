@@ -1,30 +1,29 @@
-# models:
-#    image: tp33/django
-#    external_links:
-#       - mysql:db
-#    ports:
-#       - "8001:8000"
-#       - "6000:50"
-#    volumes:
-#       - ./microservices:/app
-#
-#   #  command: bash -c "python manage.py test --noinput; python manage.py migrate; python manage.py loaddata db.json; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/microservices/wsgi.py"
-#    command: bash -c "python manage.py makemigrations microapp; python manage.py migrate; python manage.py loaddata db.json; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/microservices/wsgi.py"
-#   #   python manage.py loaddata db.json;
-# exp:
-#    image: tp33/django
-#    links:
-#       - models:models-api
-#    ports:
-#       - "8002:8000"
-#    volumes:
-#       - ./expLayer:/app
-#    command: bash -c "mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/expLayer/wsgi.py"
+models:
+   image: tp33/django
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+      - "6000:50"
+   volumes:
+      - ./microservices:/app
+  #  command: bash -c "python manage.py test --noinput; python manage.py migrate; python manage.py loaddata db.json; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/microservices/wsgi.py"
+   command: bash -c "python manage.py makemigrations microapp; python manage.py migrate; python manage.py loaddata db.json; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/microservices/wsgi.py"
+
+exp:
+   image: tp33/django
+   links:
+      - models:models-api
+   ports:
+      - "8002:8000"
+   volumes:
+      - ./expLayer:/app
+   command: bash -c "mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/expLayer/wsgi.py"
 
 web:
    image: tp33/django
-  #  links:
-  #     - exp:exp-api
+   links:
+      - exp:exp-api
    ports:
       - "8000:8000"
    volumes:

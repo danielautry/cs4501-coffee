@@ -90,7 +90,6 @@ def createCustomer(request):
         auth.save()
 
 
-
         return HttpResponse(cust)
     return HttpResponse("createCustomer Failed")
 
