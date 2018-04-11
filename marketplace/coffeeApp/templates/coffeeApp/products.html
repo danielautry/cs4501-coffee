@@ -1,16 +1,13 @@
-{% load static %}
-
-<!-- <!DOCTYPE html> -->
-<!-- <html lang="en"> -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <!-- <text> Gimme that donk you commy soup</title> -->
-  <title>JD Coffee</title>
+  <title>Products -- JD Coffee</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-  <link rel="stylesheet"  type="text/css" href="/coffeeApp/static/coffeeApp/style.css"/>
-  <!-- <link rel="stylesheet" href="coffeeApp/utilities.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="utilities.css">
   <!-- <link href="https://fonts.googleapis.com/css?family=Alex+Brush|Allura|Faster+One|Homemade+Apple|Nothing+You+Could+Do|Parisienne|Pinyon+Script" rel="stylesheet"> -->
   <link href="https://fonts.googleapis.com/css?family=Playball|Satisfy|Tangerine|Yellowtail" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -70,7 +67,7 @@ a {
   width: 100%;
   height: 100%;
   left: 0;
-  background: rgba(0, 0, 0, 1);  
+  background: rgba(0, 0, 0, .4);  
 }
 
 .overlay-dark-products {
@@ -78,7 +75,7 @@ a {
   width: 100%;
   height: 100%;
   left: 0;
-  background: rgba(0, 0, 0, .45);  
+  background: rgba(0, 0, 0, 1);  
 }
 
 .navbar {
@@ -137,11 +134,11 @@ hr {
 }
 
 .latest {
-  height: 400px;
+  height: 775px;
 }
 
 .latest h2 {
-  margin-top: 75px;
+  margin-top: 50px;
   font-size: 35px;
 }
 
@@ -155,12 +152,56 @@ hr {
 
 .latest-product {
   /*background: red;*/
-  /*height: 100px;*/
+  height: 300px;
   padding: 0 !important;
+}
+
+.latest-product-item {
+  height: 100%;
+  background: #000;
+  width: 75%;
+  margin: 0 auto;
+  position: relative;
+  -webkit-box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
+-moz-box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
+box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
+  /*border-radius: 10px;*/
+}
+
+.latest-product-item img {
+  height: 100%;
+  /*background: blue;*/
+  width: 100%;
+  margin: 0 auto;
+  opacity: .4;
+  /*border-radius: 10px;*/
+  position: relative;
 }
 
 .u-marginT {
   margin-top: 70px;
+}
+
+.latest-product-title {
+  position: absolute;
+  width: 50%;
+  height: 50px;
+  text-align: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0 auto;
+  font-size: 18px;
+  font-weight: 100;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, .5);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-top: 12px;
+  /*background: rgba(0, 0, 0, .5);*/
+  /*background: orange;*/
 }
 
 .latest-bottom {
@@ -205,6 +246,11 @@ hr {
 
 .detail-block {
   margin: 70px 0;
+  display: inline-block;
+  width: 33%;
+  font-size: 25px;
+  font-weight: 300;
+  background: white;
 }
 
 .detail-block:first-child {
@@ -231,47 +277,45 @@ box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
 
 }
 
-.main-block {
-  margin: 40px 0;
-  display: inline-block;
-  width: 50%;
-  font-size: 25px;
-  font-weight: 300;
-}
-
 </style>
 <body>
+  <!-- Swiggity swooty put me in that whooty. Stop and sue me,
+  can't woo me. I'm a swan, number wan, san. -->
 
-  <div class="container-fluid main">
-    <div class="overlay-dark">
+  <div class="container-fluid products">
+    <div class="overlay-dark-products">
       <nav class="navbar">
         <ul>
           <li>JD Coffee</li>
-          <li>Home</li>
-          <li><a href="/products/" class="u-colorWhite">Products</a></li>
+          <li><a href="/" class="u-colorWhite">Home</a></li>
+          <li>Products</li>
         </ul>
       </nav>
-      <div class="jumbotron u-NoBackground main-title w-50">
-        <h1 class="display-4 u-colorWhite">Make coffee <b class="productive">productive.</b></h1>
-        <p class="lead u-colorWhite">Welcome to <b>JD Coffee</b>, the coffee for <b>productivity</b>. We hope you enjoy our coffee as much as we do. </p>
-        <hr class="my-4 ">
-        <p class="lead u-colorWhite">
-          <a class="btn btn-primary btn-lg main-button u-colorWhite" href="#latest" role="button">Learn more</a>
+      <div class="jumbotron u-NoBackground products-title w-50">
+        <h1 class="display-4 u-colorWhite">Our <b class="productive">Products.</b></h1>
+        <p class="lead u-colorWhite">Learn more about our <b>coffee</b>, 100% pure, 100% <b>productive.</b> </p>
+        <!-- <hr class="my-4 "> -->
+        <!-- <p class="lead u-colorWhite">
+          <a class="btn btn-primary btn-lg main-button u-colorWhite" href="#" role="button">Learn more</a> -->
         </p>
       </div>
     </div>
   </div>
 
-  <div class="container-fluid latest" id="latest">
-    <h2 class="text-center">Latest Products</h2>
-    <div class="row">
-      <div class="col-md-6 main-block text-center">
-        <a href="/coffeeProduct/4/">Java Java</a>
-      </div><div class="col-md-6 main-block text-center">
-        <a href="/coffeeProduct/5/">Medium Broast</a>
-      </div>
+  <div class="products-detail">
+    <h1 class="text-center">Learn more about the <b>productivity</b> of our roasts.</h1>
+    <br>
+    <h3 class="text-center" style="margin-top: 10px">Click on one to learn more!</h3>
+    <div class="detail-block text-center">
+      <a href="/coffeeProduct/1/">Signature Roast</a>
     </div>
-    <a class="btn btn-primary btn-lg latest-button" href="/products/" role="button">Learn more</a>
+    <div class="detail-block text-center">
+      <a href="/coffeeProduct/2/">Dark Broast</a>
+    </div>
+    <div class="detail-block text-center">
+      <a href="/coffeeProduct/3/">French Vanilla</a>
+    </div>
+
   </div>
 
   <div class="container-fluid footer">
@@ -279,4 +323,4 @@ box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
   </div>
 
 </body>
-<!-- </html> -->
+</html>
