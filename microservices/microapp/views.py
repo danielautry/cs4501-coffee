@@ -8,7 +8,7 @@ from django.core import serializers
 import os
 import hmac
 import datetime
-import settings
+# import settings
 
 def index(request):
     return JsonResponse({})
