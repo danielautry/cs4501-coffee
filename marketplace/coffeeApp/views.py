@@ -48,4 +48,3 @@ def createCustomer(request):
         #put this into the template later
 
     template = loader.get_template('coffeeApp/createCustomer.html')
-    return HttpResponse(template.render(request))

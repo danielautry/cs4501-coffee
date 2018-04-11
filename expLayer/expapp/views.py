@@ -26,7 +26,6 @@ def viewCoffeeProduct(request, num):
 
     return JsonResponse(resp)
 
-
 def createCustomer(request):
     if request.method == "POST":
         name = request.POST.get('name')
@@ -44,9 +43,6 @@ def createCustomer(request):
         return JsonResponse(resp)
     return HttpResponse("Not POST in EXP")
 
-
-
-
 # def viewCustomer(request):
 #     if request.method == "POST":
 #         name = request.POST.get('name')
@@ -55,8 +51,6 @@ def createCustomer(request):
 #         password = request.POST.get('password')
 #
 #
-
-
 
 # def testPost(request):
 #
