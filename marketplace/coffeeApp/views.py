@@ -28,3 +28,24 @@ def showCoffee(request, num):
 def detail(request):
     template = loader.get_template('coffeeApp/products.html')
     return HttpResponse(template.render(request))
+
+def createCustomer(request):
+#trigger create authenticator and get ID
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        cardNumber = request.POST.get('cardNumber')
+        password = request.POST.get('password')
+        post_data = {'name': name, 'email': email, 'cardNumber': cardNumber, 'password': password}
+
+        post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+
+        req = urllib.request.Request('http://exp-api:8000/customer/create/', data=post_encoded, method='POST')
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+
+        resp = json.loads(resp_json)
+        #put this into the template later
+
+    template = loader.get_template('coffeeApp/createCustomer.html')
+    return HttpResponse(template.render(request))
