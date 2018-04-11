@@ -14,6 +14,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     cardNumber = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -26,3 +27,12 @@ class Sale(models.Model):
 
     def __str__(self):
         return self.salesman
+
+
+class Authenticator(models.Model):
+    user_id = models.CharField(max_length=100)
+    authenticator = models.CharField(max_length=257, primary_key=True)
+    date_created = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.user_id
