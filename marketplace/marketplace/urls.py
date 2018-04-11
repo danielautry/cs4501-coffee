@@ -15,11 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-# from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from coffeeApp import urls
+from django.conf import settings
+from django.contrib.staticfiles import views
 
 urlpatterns = [
     url(r'^', include('coffeeApp.urls')),
     url(r'^admin/', admin.site.urls),
-    # staticfiles_urlpatterns()
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^static/(?P<path>.*)$', views.serve),
+    ]

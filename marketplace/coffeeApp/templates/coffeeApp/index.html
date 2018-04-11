@@ -1,248 +1,18 @@
 {% load static %}
-
-<!-- <!DOCTYPE html> -->
-<!-- <html lang="en"> -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <!-- <text> Gimme that donk you commy soup</title> -->
   <title>JD Coffee</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-  <link rel="stylesheet"  type="text/css" href="/coffeeApp/static/coffeeApp/style.css"/>
-  <!-- <link rel="stylesheet" href="coffeeApp/utilities.css"> -->
-  <!-- <link href="https://fonts.googleapis.com/css?family=Alex+Brush|Allura|Faster+One|Homemade+Apple|Nothing+You+Could+Do|Parisienne|Pinyon+Script" rel="stylesheet"> -->
+  <link rel="stylesheet"  type="text/css" href="{% static 'coffeeApp/style.css' %}"/>
   <link href="https://fonts.googleapis.com/css?family=Playball|Satisfy|Tangerine|Yellowtail" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<style>
-body {
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  /*background: green;*/
-}
-
-.u-NoBackground {
-  background: transparent;
-}
-
-.u-colorWhite {
-  color: rgba(255, 255, 255, .95) !important;
-}
-
-.u-colorBlack {
-  color: black;
-}
-
-
-.main {
-  background: url('coffee1.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  height: 100vh;
-  position: relative;
-}
-
-.products {
-  background: url('wood.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  height: 500px;
-  position: relative;
-}
-
-h1, h2, h3, h4, h5, h6, ul {
-  margin: 0;
-  padding: 0;
-}
-
-a {
-  text-decoration: none;
-}
-
-.overlay-dark {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  background: rgba(0, 0, 0, 1);  
-}
-
-.overlay-dark-products {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  background: rgba(0, 0, 0, .45);  
-}
-
-.navbar {
-  border-bottom: 1px solid rgba(255, 255, 255, .4);
-  /*background: white;*/
-  border-radius: 0;
-}
-
-.navbar ul {
-  text-align: right;
-}
-
-.navbar li {
-  display: inline-block;
-  padding: 20px;
-  color: rgba(255, 255, 255, .9);
-  font-size: 18px;
-}
-
-.navbar li:first-child {
-  float: left;
-  font-weight: 700;
-}
-
-.navbar li:last-child {
-  padding-right: 40px;
-}
-
-.main-title h1 {
-  font-weight: 300;
-}
-
-.productive {
-  color: orange !important;
-}
-
-.jumbotron {
-  margin-top: 125px;
-  width: 70%;
-}
-
-.jumbotron p {
-  margin: 0;
-  margin-top: 10px;
-}
-
-hr {
-  border-top-color: rgba(255, 255, 255, .2) !important;
-}
-
-.main-button {
-  background: transparent;
-  border-radius: 0;
-  border: 1px solid rgba(255, 255, 255, .5);
-  width: 25%;
-}
-
-.latest {
-  height: 400px;
-}
-
-.latest h2 {
-  margin-top: 75px;
-  font-size: 35px;
-}
-
-.latest p {
-  width: 60%;
-  margin: 0 auto;
-  margin-top: 20px;
-  text-align: center;
-  font-size: 16px;
-}
-
-.latest-product {
-  /*background: red;*/
-  /*height: 100px;*/
-  padding: 0 !important;
-}
-
-.u-marginT {
-  margin-top: 70px;
-}
-
-.latest-bottom {
-  margin-top: 40px;
-}
-
-.latest-button {
-  margin: 0 auto;
-  display: block;
-  width: 15%;
-  margin-top: 35px;
-  border-radius: 0;
-  background: transparent;
-  border: 1px solid black;
-  color: black !important;
-  height: 50px;
-}
-
-.footer {
-  height: 100px;
-  background: rgba(0, 0, 0, .85);
-}
-
-.footer-title {
-  width: 50%;
-  display: inline-block;
-  padding: 40px 20px 0 20px;
-  font-size: 18px;
-  color: white;
-}
-
-.products .jumbotron {
-  width: 100%;
-  text-align: center;
-  margin-top: 70px;
-}
-
-.products-detail {
-  /*padding-top: 50px;*/
-  margin: 50px;
-}
-
-.detail-block {
-  margin: 70px 0;
-}
-
-.detail-block:first-child {
-  margin-top: 90px;
-}
-
-.detail-image {
-  width: 30%;
-  display: inline-block;
-}
-
-.detail-description {
-  width: 70%;
-  display: inline-block;
-  font-size: 16px;
-}
-
-.detail-image img {
-  width: 250px;
-  height: 250px;
-  -webkit-box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
--moz-box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
-box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
-
-}
-
-.main-block {
-  margin: 40px 0;
-  display: inline-block;
-  width: 50%;
-  font-size: 25px;
-  font-weight: 300;
-}
-
-</style>
 <body>
-
-  <div class="container-fluid main">
+  <div class="main container-fluid">
     <div class="overlay-dark">
       <nav class="navbar">
         <ul>
@@ -262,7 +32,7 @@ box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
     </div>
   </div>
 
-  <div class="container-fluid latest" id="latest">
+  <div class="latest container-fluid" id="latest">
     <h2 class="text-center">Latest Products</h2>
     <div class="row">
       <div class="col-md-6 main-block text-center">
@@ -274,9 +44,9 @@ box-shadow: 0px 0px 25px -5px rgba(0,0,0,1);
     <a class="btn btn-primary btn-lg latest-button" href="/products/" role="button">Learn more</a>
   </div>
 
-  <div class="container-fluid footer">
+  <div class="footer container-fluid">
     <h2 class="footer-title"><b>JD Coffee</b></h2><h2 class="footer-title text-right">109 Shamrock Rd, Charlottesville, VA, 22903</h2>
   </div>
 
 </body>
-<!-- </html> -->
+</html>
