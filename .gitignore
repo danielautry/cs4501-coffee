@@ -5,6 +5,12 @@ __pycache__/
 local_settings.py
 db.sqlite3
 media
-/microservices/microapp/migrations
-/marketplace/marketplace/migrations
-/marketplace/expApp/migrations
+/microservices/microapp/migrations/
+/marketplace/marketplace/migrations/
+/marketplace/expApp/migrations/
+/microservices/microapp/__pycache__/
+/microservices/microservices/__pycache__/
+/marketplace/coffeeApp/__pycache__/
+/marketplace/marketplace/__pycache__/
+/marketplace/expApp/__pycache__/
+/marketplace/expLayer/__pycache__/
