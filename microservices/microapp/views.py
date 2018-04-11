@@ -5,6 +5,10 @@ from .models import *
 from django.http import JsonResponse
 import json
 from django.core import serializers
+import os
+import hmac
+import datetime
+import settings
 
 def index(request):
     return JsonResponse({})
@@ -54,7 +58,6 @@ def viewCustomer(request, num):
         data = {
             "Name" : cust.name,
             "Email" : cust.email,
-            "Card Number" : cust.cardNumber
         }
         return JsonResponse(data, safe=False)
     except:
@@ -63,12 +66,31 @@ def viewCustomer(request, num):
         })
 
 def createCustomer(request):
+    #CREATE AUTHENTICATOR HERE
+    authString = hmac.new(
+        key = settings.SECRET_KEY.encode('utf-8'),
+        msg = os.urandom(32),
+        digestmod = 'sha256',
+    ).hexdigest()
+
+
     if request.method == "POST":
+        #first create customer to DB
         name = request.POST.get('name')
         email = request.POST.get('email')
         cardNumber = request.POST.get('cardNumber')
-        cust = Customer.objects.create(name = name, email = email, cardNumber = cardNumber)
+        password = request.POST.get('password')
+        cust = Customer.objects.create(name = name, email = email, cardNumber = cardNumber, password = password)
+        id = cust.id #THIS LINE IS WRONG BUT ALMOST RIGHT
         cust.save()
+
+        #Authenticator next
+        date_now = datetime.datetime.now()
+        auth = Authenticator.objects.create(user_id = id, authenticator = authString, date_created = date_now)
+        auth.save()
+
+
+
         return HttpResponse(cust)
     return HttpResponse("createCustomer Failed")
 
