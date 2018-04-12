@@ -7,9 +7,8 @@ from django.core import serializers
 from django.template import loader
 import urllib.request
 import urllib.parse
-
-from .models import CoffeeProduct
 from .forms import NameForm
+from django.http import HttpResponseRedirect
 # from .microservices.microapp import models as models
 
 
@@ -30,28 +29,33 @@ def detail(request):
     template = loader.get_template('coffeeApp/products.html')
     return HttpResponse(template.render(request))
 
-def createCustomer(request):
-#trigger create authenticator and get ID
-
-    if request.method == "POST":
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        cardNumber = request.POST.get('cardNumber')
-        password = request.POST.get('password')
-        post_data = {'name': name, 'email': email, 'cardNumber': cardNumber, 'password': password}
-
-        post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-
-        req = urllib.request.Request('http://exp-api:8000/customer/create/', data=post_encoded, method='POST')
-        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-
-        resp = json.loads(resp_json)
+# def createCustomer(request):
+# #trigger create authenticator and get ID
+#
+#     if request.method == "POST":
+#         name = request.POST.get('name')
+#         # email = request.POST.get('email')
+#         # cardNumber = request.POST.get('cardNumber')
+#         # password = request.POST.get('password')
+#         # post_data = {'name': name, 'email': email, 'cardNumber': cardNumber, 'password': password}
+#         post_data = {'name': name}
+#         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+#
+#         req = urllib.request.Request('http://exp-api:8000/customer/create/', data=post_encoded, method='POST')
+#         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+#
+#         resp = json.loads(resp_json)
         #put this into the template later
 
-    template = loader.get_template('coffeeApp/createCustomer.html')
+    # template = loader.get_template('coffeeApp/createCustomer.html')
 
-def testForm(request):
+# def viewFormResults(request):
+#     template = loader.get_template('coffeeApp/viewFormResults.html')
+#     return HttpResponse(template.render(request))
+
+def createAccount(request):
     # if this is a POST request we need to process the form data
+    name = ''
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = NameForm(request.POST)
@@ -60,10 +64,16 @@ def testForm(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return HttpResponse('Thanks')
+            name = form.cleaned_data['name']
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = NameForm()
 
-    return render(request, 'coffeeApp/testForm.html', {'form': form})
+    return render(request, 'coffeeApp/account.html', {'name': name})
+
+# def viewFormResults(request, num):
+#     #coffee = get_object_or_404(CoffeeProduct, pk=num)
+#     #print ("About to perform the HTML GET request...")
+#     template = loader.get_template('coffeeApp/products.html')
+#     return HttpResponse(template.render(request))

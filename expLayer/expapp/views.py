@@ -29,10 +29,11 @@ def viewCoffeeProduct(request, num):
 def createCustomer(request):
     if request.method == "POST":
         name = request.POST.get('name')
-        email = request.POST.get('email')
-        cardNumber = request.POST.get('cardNumber')
-        password = request.POST.get('password')
-        post_data = {'name': name, 'email': email, 'cardNumber': cardNumber, 'password': password}
+        # email = request.POST.get('email')
+        # cardNumber = request.POST.get('cardNumber')
+        # password = request.POST.get('password')
+        # post_data = {'name': name, 'email': email, 'cardNumber': cardNumber, 'password': password}
+        post_data = {'name': name}
 
         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
 
