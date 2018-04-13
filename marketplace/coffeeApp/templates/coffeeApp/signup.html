@@ -3,24 +3,15 @@
 
   </head>
    <body>
-      <form name="form" action = "{% url "createAccount" %}" method="post" >
-         {% csrf_token %}
-         <div style = "max-width:470px;">
-            <center>
-               <input type="text" style="margin-left:20%;"
-                  placeholder="name" name="name" />
-            </center>
-         </div>
-         <br>
-         <div style = "max-width:470px;">
-            <center>
-               <button style = "border:0px; background-color:#4285F4; margin-top:8%;
-                  height:35px; width:80%;margin-left:19%;" type="submit"
-                  value="submit" >
-                  <strong>Submit</strong>
-               </button>
-            </center>
-         </div>
+      <form name="form" action = "{% url "createAccount" %}" method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="name" name="name"/>
+        <input type="text" placeholder="email" name="email"/>
+        <input type="text" placeholder="card number" name="cardNumber"/>
+        <input type="text" placeholder="password" name="password"/>
+        <button type="submit" value="submit">
+          <strong>Submit</strong>
+        </button>
       </form>
    </body>
 </html>

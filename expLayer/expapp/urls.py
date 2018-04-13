@@ -6,5 +6,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^coffeeProduct/(?P<num>[0-9]+)/',views.viewCoffeeProduct, name = 'viewCoffeeProduct'),
     url(r'^customer/create/',views.createCustomer, name = 'createCustomer'),
-    url(r'^customer/(?<num>[0-9]+)/',views.viewCustomer, name = 'viewCustomer')
+    url(r'^customer/(?P<num>[0-9]+)/',views.viewCustomer, name = 'viewCustomer')
 ]

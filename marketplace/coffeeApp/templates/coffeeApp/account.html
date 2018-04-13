@@ -1,5 +1,12 @@
 <html>
    <body>
-      You are : <strong>{{name}}</strong>
+     {% csrf_token %}
+      Your name is <strong>{{name}}</strong>
+      <br>
+      Your email is <strong>{{email}}</strong>
+      <br>
+      Your cardNumber is <strong>{{cardNumber}}</strong>
+      <br>
+      Your password is <strong>{{password}}</strong>
    </body>
 </html>

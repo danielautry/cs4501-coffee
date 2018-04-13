@@ -8,8 +8,8 @@ models:
    volumes:
       - ./microservices:/app
   #  command: bash -c "python manage.py test --noinput; python manage.py migrate; python manage.py loaddata db.json; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/microservices/wsgi.py"
-   command: bash -c "python manage.py makemigrations microapp; python manage.py migrate; python manage.py loaddata db.json; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/microservices/wsgi.py"
-
+   command: bash -c "python manage.py makemigrations microapp; python manage.py migrate; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/microservices/wsgi.py"
+  #  python manage.py loaddata db.json;
 exp:
    image: tp33/django
    links:
