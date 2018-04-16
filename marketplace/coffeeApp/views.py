@@ -55,7 +55,7 @@ def createAccount(request):
     email = ''
     cardNumber = ''
     password = ''
-
+    post_data = {}
     if request.method == 'POST':
         form = NameForm(request.POST)
         if form.is_valid():
@@ -63,13 +63,18 @@ def createAccount(request):
             email = form.cleaned_data['email']
             cardNumber = form.cleaned_data['cardNumber']
             password = form.cleaned_data['password']
-            post_data = {'name': name, 'email': email, 'cardNumber': cardNumber, 'password': password}
+            post_data = {
+                'name': name,
+                'email': email,
+                'cardNumber': cardNumber,
+                'password': password
+            }
             post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
             req = urllib.request.Request('http://exp-api:8000/customer/create/', data=post_encoded, method='POST')
             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
             resp = json.loads(resp_json)
-            return HttpResponse('Thanks')
-    # if a GET (or any other method) we'll create a blank form
+            return JsonResponse(resp_json, safe=False)
+            # return HttpResponse('Thanks')
     else:
         form = NameForm()
     return render(request, 'coffeeApp/account.html', post_data)

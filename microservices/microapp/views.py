@@ -67,11 +67,11 @@ def viewCustomer(request, num):
 
 def createCustomer(request):
     #CREATE AUTHENTICATOR HERE
-    authString = hmac.new(
-        key = settings.SECRET_KEY.encode('utf-8'),
-        msg = os.urandom(32),
-        digestmod = 'sha256',
-    ).hexdigest()
+    # authString = hmac.new(
+    #     key = settings.SECRET_KEY.encode('utf-8'),
+    #     msg = os.urandom(32),
+    #     digestmod = 'sha256',
+    # ).hexdigest()
 
 
     if request.method == "POST":
@@ -85,9 +85,9 @@ def createCustomer(request):
         cust.save()
 
         #Authenticator next
-        date_now = datetime.datetime.now()
-        auth = Authenticator.objects.create(user_id = id, authenticator = authString, date_created = date_now)
-        auth.save()
+        # date_now = datetime.datetime.now()
+        # auth = Authenticator.objects.create(user_id = id, authenticator = authString, date_created = date_now)
+        # auth.save()
 
 
         return HttpResponse(cust)
