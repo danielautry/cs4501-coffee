@@ -81,10 +81,10 @@ def createCustomer(request):
         email = request.POST['email']
         cardNumber = request.POST['cardNumber']
         password = request.POST['password']
-        #cust = Customer.objects.create(name = name, email = email, cardNumber = cardNumber, password = password)
-        #id = cust.id #THIS LINE IS WRONG BUT ALMOST RIGHT
-        #cust.save()
-        #jsonCust = model_to_dict(cust)
+        cust = Customer.objects.create(name = name, email = email, cardNumber = cardNumber, password = password)
+        id = cust.id #THIS LINE IS WRONG BUT ALMOST RIGHT
+        cust.save()
+        jsonCust = model_to_dict(cust)
 
         jsonCust = {
             "name" : name,
