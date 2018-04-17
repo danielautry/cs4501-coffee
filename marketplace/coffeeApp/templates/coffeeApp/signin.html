@@ -2,11 +2,9 @@
   <head>
   </head>
    <body>
-      <form name="form" action = "{% url "createAccount" %}" method="post">
+      <form name="form" action = "{% url "login" %}" method="post">
         {% csrf_token %}
-        <input type="text" placeholder="name" name="name"/>
         <input type="text" placeholder="email" name="email"/>
-        <input type="text" placeholder="card number" name="cardNumber"/>
         <input type="text" placeholder="password" name="password"/>
         <button type="submit" value="submit">
           <strong>Submit</strong>

@@ -32,11 +32,6 @@ def createCustomer(request):
     password = ''
     post_data = {}
     if request.method == "POST":
-        # respDict = request.POST.dict()
-        # name = respDict['name']
-        # email = respDict['email']
-        # cardNumber = respDict['cardNumber']
-        # password = respDict['password']
         name = request.POST['name']
         email = request.POST['email']
         cardNumber = request.POST['cardNumber']
@@ -52,37 +47,23 @@ def createCustomer(request):
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
         return JsonResponse(resp)
-        #return render(request, post_data)
     return HttpResponse("Not POST in EXP")
 
-    # if 'name' in request.GET and 'email' in request.GET:
-    #     name = request.GET['name']
-    #     email = request.GET['email']
-    #     cardNumber = request.GET['cardNumber']
-    #     password = request.GET['password']
-    #     # API call to models
-    #     req = urllib.request.Request('http://models-api:8000/customer/create/', data=post_encoded, method='POST')
-    #     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    #     return HttpResponse(resp_json, safe=False)
-    # else:
-    #     return HttpResponse(json.dumps({'response':'something broke'}))
-
-#
-
-# def testPost(request):
-#
-#     # make a POST request.
-#     # we urlencode the dictionary of values we're passing up and then make the POST request
-#     # again, no error handling
-#
-#     print ("About to perform the POST request...")
-#
-#     post_data = {'coffeeType': 'Java java', 'price': '3000', 'userId': 5}
-#
-#     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-#
-#     req = urllib.request.Request('http://models-api:8000/coffeeProduct/create/', data=post_encoded, method='POST')
-#     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-#
-#     resp = json.loads(resp_json)
-#     return JsonResponse(resp)
+@csrf_exempt
+def login(request):
+    email = ''
+    password = ''
+    post_data = {}
+    if request.method == "POST":
+        email = request.POST['email']
+        password = request.POST['password']
+        post_data = {
+            'email': email,
+            'password': password
+        }
+        post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+        req = urllib.request.Request('http://models-api:8000/customer/find/', data=post_encoded, method='POST')
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+        return JsonResponse(resp)
+    return HttpResponse("Not POST in EXP")

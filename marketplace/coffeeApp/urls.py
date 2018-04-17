@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^products/', views.detail, name='detail'),
     url(r'^signup/', TemplateView.as_view(template_name='coffeeApp/signup.html')),
     url(r'^account/', views.createAccount, name='createAccount'),
+    url(r'^signin/', TemplateView.as_view(template_name='coffeeApp/signin.html')),
+    url(r'^login/', views.login, name='login'),
 ]

@@ -9,6 +9,7 @@ import os
 import hmac
 import datetime
 import pdb
+from django.contrib.auth.hashers import make_password, check_password
 # import settings
 
 def index(request):
@@ -51,7 +52,7 @@ def destroyCoffeeProduct(request, num):
 def viewCustomer(request, num):
     try:
         cust = get_object_or_404(Customer, pk = num)
-        custObj = Customer.objects.all().values('name', 'email', 'cardNumber')
+        custObj = Customer.objects.all().values('name', 'email', 'cardNumber', 'password')
         cust_list = list(custObj)
         if request.method == "POST":
             cust.cardNumber = request.POST.get('newCardNumber')
@@ -59,6 +60,8 @@ def viewCustomer(request, num):
         data = {
             "Name" : cust.name,
             "Email" : cust.email,
+            "Card_Number" : cust.cardNumber,
+            "Password" : cust.password
         }
         return JsonResponse(data, safe=False)
     except:
@@ -85,7 +88,6 @@ def createCustomer(request):
         id = cust.id #THIS LINE IS WRONG BUT ALMOST RIGHT
         cust.save()
         jsonCust = model_to_dict(cust)
-
         jsonCust = {
             "name" : name,
             "email" : email,
@@ -93,13 +95,29 @@ def createCustomer(request):
             "Password" : password
         }
 
-        #Authenticator next
+        # Authenticator next
         # date_now = datetime.datetime.now()
         # auth = Authenticator.objects.create(user_id = id, authenticator = authString, date_created = date_now)
         # auth.save()
 
         return JsonResponse(jsonCust)
     return HttpResponse("createCustomer Failed")
+
+def findCustomer(request):
+    error_data = {"Error" : "Invalid User"}
+    if request.method == "POST":
+        #lookup customer by email and password
+        email = request.POST['email']
+        password = request.POST['password']
+        cust = Customer.objects.get(email = email, password = password)
+        if Customer.objects.filter(email = email, password = password).exists():
+            # if check_password(password, cust.password):
+            data = {
+                "Email" : cust.email,
+                "Password" : cust.password
+                }
+            return JsonResponse(data, safe=False)
+    return JsonResponse(error_data)
 
 def destroyCustomer(request, num):
     cust = get_object_or_404(Customer, pk = num)
