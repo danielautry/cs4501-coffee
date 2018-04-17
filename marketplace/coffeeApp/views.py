@@ -10,6 +10,7 @@ import urllib.parse
 from .forms import NameForm
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+import pdb
 
 def index(request):
     template = loader.get_template('coffeeApp/index.html')
@@ -73,8 +74,8 @@ def createAccount(request):
             req = urllib.request.Request('http://exp-api:8000/customer/create/', data=post_encoded, method='POST')
             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
             resp = json.loads(resp_json)
-            return JsonResponse(resp_json, safe=False)
-            # return HttpResponse('Thanks')
+            return JsonResponse(resp, safe=False)
+            #return HttpResponse('Thanks')
     else:
         form = NameForm()
     return render(request, 'coffeeApp/account.html', post_data)

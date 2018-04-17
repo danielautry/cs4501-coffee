@@ -51,7 +51,8 @@ def createCustomer(request):
         req = urllib.request.Request('http://models-api:8000/customer/create/', data=post_encoded, method='POST')
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
-        return render(request, post_data)
+        return JsonResponse(resp)
+        #return render(request, post_data)
     return HttpResponse("Not POST in EXP")
 
     # if 'name' in request.GET and 'email' in request.GET:

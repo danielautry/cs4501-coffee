@@ -8,6 +8,7 @@ from django.core import serializers
 import os
 import hmac
 import datetime
+import pdb
 # import settings
 
 def index(request):
@@ -66,6 +67,7 @@ def viewCustomer(request, num):
         })
 
 def createCustomer(request):
+
     #CREATE AUTHENTICATOR HERE
     # authString = hmac.new(
     #     key = settings.SECRET_KEY.encode('utf-8'),
@@ -73,24 +75,30 @@ def createCustomer(request):
     #     digestmod = 'sha256',
     # ).hexdigest()
 
-
     if request.method == "POST":
         #first create customer to DB
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        cardNumber = request.POST.get('cardNumber')
-        password = request.POST.get('password')
-        cust = Customer.objects.create(name = name, email = email, cardNumber = cardNumber, password = password)
-        id = cust.id #THIS LINE IS WRONG BUT ALMOST RIGHT
-        cust.save()
+        name = request.POST['name']
+        email = request.POST['email']
+        cardNumber = request.POST['cardNumber']
+        password = request.POST['password']
+        #cust = Customer.objects.create(name = name, email = email, cardNumber = cardNumber, password = password)
+        #id = cust.id #THIS LINE IS WRONG BUT ALMOST RIGHT
+        #cust.save()
+        #jsonCust = model_to_dict(cust)
+
+        jsonCust = {
+            "name" : name,
+            "email" : email,
+            "Card Number" : cardNumber,
+            "Password" : password
+        }
 
         #Authenticator next
         # date_now = datetime.datetime.now()
         # auth = Authenticator.objects.create(user_id = id, authenticator = authString, date_created = date_now)
         # auth.save()
 
-
-        return HttpResponse(cust)
+        return JsonResponse(jsonCust)
     return HttpResponse("createCustomer Failed")
 
 def destroyCustomer(request, num):
