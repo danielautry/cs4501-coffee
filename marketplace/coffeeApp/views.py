@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import *
 from django.http import JsonResponse
 import json
 from django.core import serializers
@@ -15,22 +14,22 @@ import pdb
 from django.contrib.auth.hashers import make_password, check_password
 
 def index(request):
-    template = loader.get_template('coffeeApp/index.html')
+    template = loader.get_template('marketplace/index.html')
     return HttpResponse(template.render(request))
 
-def showCoffee(request, num):
-    url = 'http://exp-api:8000/coffeeProduct/' + str(num) + '/'
-    req = urllib.request.Request('http://exp-api:8000/coffeeProduct/' + str(num) + '/')
+def showProduct(request, num):
+    url = 'http://exp-api:8000/product/' + str(num) + '/'
+    req = urllib.request.Request('http://exp-api:8000/product/' + str(num) + '/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     resp = json.loads(resp_json)
-    return render(request, 'coffeeApp/itemDetail.html', resp)
+    return render(request, 'marketplace/itemDetail.html', resp)
 
 def detail(request):
-    template = loader.get_template('coffeeApp/products.html')
+    template = loader.get_template('marketplace/products.html')
     return HttpResponse(template.render(request))
 
 def viewFormResults(request):
-    template = loader.get_template('coffeeApp/viewFormResults.html')
+    template = loader.get_template('marketplace/viewFormResults.html')
     return HttpResponse(template.render(request))
 
 @csrf_exempt
@@ -58,10 +57,10 @@ def createAccount(request):
             req = urllib.request.Request('http://exp-api:8000/customer/create/', data=post_encoded, method='POST')
             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
             resp = json.loads(resp_json)
-            return JsonResponse(resp, safe=False)
+            return render(request, 'marketplace/account.html', post_data)
     else:
         form = NameForm()
-    return render(request, 'coffeeApp/account.html', post_data)
+    return render(request, 'marketplace/account.html', post_data)
 
 @csrf_exempt
 def login(request):
@@ -87,12 +86,12 @@ def login(request):
                 #send back to login page
                 return JsonResponse(error_data)
             authenticator = resp['Authenticator']
-            response = render(request, "coffeeApp/loggedin.html", post_data)
+            response = render(request, "marketplace/loggedin.html", post_data)
             response.set_cookie("auth", authenticator)
             return response
     else:
         form = LoginForm()
-    return render(request, 'coffeeApp/loggedin.html', post_data)
+    return render(request, 'marketplace/loggedin.html', post_data)
 
 
 
@@ -100,7 +99,7 @@ def login(request):
 
 
 @csrf_exempt
-def createReview(request):
+def createProduct(request):
     auth = request.COOKIES.get('auth')
     if not auth:
         #or something !!!!!
@@ -111,51 +110,16 @@ def createReview(request):
     #     return render("loggedin.html")
 
     if request.method == "POST":
-        text = request.POST['text']
-        coffeeProduct = request.POST['coffeeProduct']
+        product = request.POST['product']
+        price = request.POST['price']
         post_data = {
-            'text' : text,
-            'coffeeProduct' : coffeeProduct,
+            'product' : product,
+            'price' : price,
             'auth' : auth
         }
         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-        req = urllib.request.Request('http://exp-api:8000/review/create/', data=post_encoded, method='POST')
+        req = urllib.request.Request('http://exp-api:8000/product/create/', data=post_encoded, method='POST')
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
-        return JsonResponse(post_data, safe=False)
+        return render(request, 'marketplace/productRegistered.html', resp)
     return HttpResponse("createReview Failed")
-
-
-# def createReview(request):
-
-    # Try to get the authenticator cookie
-    # auth = request.COOKIES.get('auth')
-    #
-    # # If the authenticator cookie wasn't set...
-    # if not auth:
-    #   # Handle user not logged in while trying to create a listing
-    #   return HttpResponseRedirect(reverse("login") + "?next=" + reverse("loggedin")
-    #
-    # # If we received a GET request instead of a POST request...
-    # if request.method == 'GET':
-    #     # Return to form page
-    #     return render("loggedin.html", ...)
-    #
-    # # Otherwise, create a new form instance with our POST data
-    # f = create_listing_form(request.POST)
-    #
-    # # ...
-    #
-    # # Send validated information to our experience layer
-    # resp = create_listing_exp_api(auth, ...)
-    #
-    # # Check if the experience layer said they gave us incorrect information
-    # if resp and not resp['ok']:
-    #     if resp['error'] == exp_srvc_errors.E_UNKNOWN_AUTH:
-    #         # Experience layer reports that the user had an invalid authenticator --
-    #         #   treat like user not logged in
-    #         return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing")
-    #
-    # # ...
-    #
-    # return render("create_listing_success.html", ...)

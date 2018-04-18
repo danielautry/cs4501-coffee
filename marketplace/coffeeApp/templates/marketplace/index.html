@@ -12,40 +12,43 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <div class="products container-fluid">
-    <div class="overlay-dark-products">
+  <div class="main container-fluid">
+    <div class="overlay-dark">
       <nav class="navbar">
         <ul>
           <li>JD Coffee</li>
           <li>Home</li>
           <li><a href="/signup/" class="u-colorWhite">Sign Up</a></li>
           <li><a href="/signin/" class="u-colorWhite">Sign In</a></li>
-          <li><a href="/products/" class="u-colorWhite">Products</a></li>
+          <li><a href="/productDetail/" class="u-colorWhite">Products</a></li>
         </ul>
       </nav>
-      <div class="jumbotron u-NoBackground products-title w-50">
-        <h1 class="display-4 u-colorWhite">Our <b class="productive">Products.</b></h1>
-        <p class="lead u-colorWhite">Learn more about our <b>coffee</b>, 100% pure, 100% <b>productive.</b> </p>
+      <div class="jumbotron u-NoBackground main-title w-50">
+        <h1 class="display-4 u-colorWhite">Make coffee <b class="productive">productive.</b></h1>
+        <p class="lead u-colorWhite">Welcome to <b>JD Coffee</b>, the coffee for <b>productivity</b>. We hope you enjoy our coffee as much as we do. </p>
+        <hr class="my-4 ">
+        <p class="lead u-colorWhite">
+          <a class="btn btn-primary btn-lg main-button u-colorWhite" href="#latest" role="button">Learn more</a>
         </p>
       </div>
     </div>
   </div>
-  <div class="products-detail container-fluid">
-    <h1 class="text-center">Learn more about the <b>productivity</b> of our roasts.</h1>
-    <br>
-    <h3 class="text-center" style="margin-top: 10px">Click on one to learn more!</h3>
-    <div class="detail-block text-center">
-      <a href="/coffeeProduct/1/">Signature Roast</a>
+
+  <div class="latest container-fluid" id="latest">
+    <h2 class="text-center">Latest Products</h2>
+    <div class="row">
+      <div class="col-md-6 main-block text-center">
+        <a href="/coffeeProduct/4/">Java Java</a>
+      </div><div class="col-md-6 main-block text-center">
+        <a href="/coffeeProduct/5/">Medium Broast</a>
+      </div>
     </div>
-    <div class="detail-block text-center">
-      <a href="/coffeeProduct/2/">Dark Broast</a>
-    </div>
-    <div class="detail-block text-center">
-      <a href="/coffeeProduct/3/">French Vanilla</a>
-    </div>
+    <a class="btn btn-primary btn-lg latest-button" href="/products/" role="button">Learn more</a>
   </div>
+
   <div class="footer container-fluid">
     <h2 class="footer-title"><b>JD Coffee</b></h2><h2 class="footer-title text-right">109 Shamrock Rd, Charlottesville, VA, 22903</h2>
   </div>
+
 </body>
 </html>
