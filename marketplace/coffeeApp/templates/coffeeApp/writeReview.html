@@ -1,0 +1,14 @@
+<html>
+  <head>
+  </head>
+   <body>
+      <form name="form" action = "{% url "createReview" %}" method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="Text" name="text"/>
+        <input type="text" placeholder="Coffee You are Reviewing" name="coffeeProduct"/>
+        <button type="submit" value="submit">
+          <strong>Submit</strong>
+        </button>
+      </form>
+   </body>
+</html>

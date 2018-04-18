@@ -12,4 +12,9 @@ urlpatterns = [
     url(r'^signin/', TemplateView.as_view(template_name='coffeeApp/signin.html')),
     url(r'^login/?next=loggedin', views.login, name='login'),
     url(r'^loggedin/', TemplateView.as_view(template_name='coffeeApp/loggedin.html')),
+
+    #jeremy tuesday edits below
+    url(r'^writeReview/', TemplateView.as_view(template_name='coffeeApp/writeReview.html'), name='writeReview'),
+    url(r'^createReview/', views.createReview, name='createReview'),
+
 ]

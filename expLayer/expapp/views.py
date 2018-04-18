@@ -67,3 +67,25 @@ def login(request):
         auth = json.loads(auth_json)
         return JsonResponse(auth, safe=False)
     return HttpResponse("Not POST in EXP")
+
+
+
+#### Jeremy Tuesday edits
+@csrf_exempt
+def createReview(request):
+    if request.method == "POST":
+        text = request.POST['text']
+        coffeeProduct = request.POST['coffeeProduct']
+        auth = request.POST['auth']
+        post_data = {
+            'text' : text,
+            'coffeeProduct' : coffeeProduct,
+            'auth' : auth
+        }
+        post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+        req = urllib.request.Request('http://models-api:8000/review/create/', data=post_encoded, method='POST')
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+        return JsonResponse(post_data, safe=False)
+
+    return JsonResponse({'Error' : 'Exp Layer'})

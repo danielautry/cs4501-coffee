@@ -87,11 +87,44 @@ def login(request):
                 #send back to login page
                 return JsonResponse(error_data)
             authenticator = resp['Authenticator']
-            response = HttpResponseRedirect(next)
+            response = render(request, "coffeeApp/loggedin.html", post_data)
             response.set_cookie("auth", authenticator)
+            return response
     else:
         form = LoginForm()
     return render(request, 'coffeeApp/loggedin.html', post_data)
+
+
+
+##### Start jeremy editing Tuesday
+
+
+@csrf_exempt
+def createReview(request):
+    auth = request.COOKIES.get('auth')
+    if not auth:
+        #or something !!!!!
+        return HttpResponse("NO auth")
+
+    # if request.method == "GET":
+    #     #fix url !!!!
+    #     return render("loggedin.html")
+
+    if request.method == "POST":
+        text = request.POST['text']
+        coffeeProduct = request.POST['coffeeProduct']
+        post_data = {
+            'text' : text,
+            'coffeeProduct' : coffeeProduct,
+            'auth' : auth
+        }
+        post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+        req = urllib.request.Request('http://exp-api:8000/review/create/', data=post_encoded, method='POST')
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+        return JsonResponse(post_data, safe=False)
+    return HttpResponse("createReview Failed")
+
 
 # def createReview(request):
 

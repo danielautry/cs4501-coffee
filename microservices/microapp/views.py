@@ -162,3 +162,52 @@ def destroySale(request, num):
         purchase.delete()
         return HttpResponse("Delete Successful")
     return HttpResponse("destroySale Failed")
+
+
+#start jeremy Tuesday edits
+
+def viewReview(request, num):
+    try:
+        curReview = Review.objects.get(pk = num)
+        if request.method == "POST":
+            curReview.amount = request.POST.get('newReview')
+            curReview.save()
+        data1 = serializers.serialize('json', [curReview,])
+        struct = json.loads(data1)
+        data1 = json.dumps(struct[0])
+        return HttpResponse(data1)
+    except:
+        return JsonResponse({
+            "Error": "Sale does not exist"
+        })
+
+
+def createReview(request):
+
+    if request.method == "POST":
+        #get user info from auth:
+        auth = request.POST['auth']
+        existingAuth = Authenticator.objects.get(authenticator = auth)
+        if not existingAuth:
+            return JsonResponse({'Error' : 'Invalid Auth'})
+
+        customerID = existingAuth.user_id
+
+        #get other review fields
+        text = request.POST['text']
+        coffeeName = request.POST['coffeeProduct']
+
+        #find objects in db
+        customer = Customer.objects.get(pk = customerID)
+        coffeeProduct = CoffeeProduct.objects.get(coffeeType = coffeeName)
+
+        revi = Review.objects.create(text = text, customer = customer, coffeeProduct = coffeeProduct)
+        #id = revi.id
+        revi.save()
+
+        jsonRevi = {
+            "text" : text,
+            "coffeeProduct" : coffeeName
+        }
+        return JsonResponse(jsonRevi)
+    return HttpResponse("createCustomer Failed")
