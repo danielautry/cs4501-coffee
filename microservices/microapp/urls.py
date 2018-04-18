@@ -13,6 +13,6 @@ urlpatterns = [
     url(r'^sale/(?P<num>[0-9]+)/',views.viewSale, name = 'viewSale'),
     url(r'^sale/destroy/(?P<num>[0-9]+)/',views.destroySale, name = 'destroySale'),
     url(r'^sale/create/',views.createSale, name = 'createSale'),
-    url(r'^customer/find/',views.findCustomer, name = 'findCustomer')
+    url(r'^customer/login/',views.login, name = 'login')
 
 ]

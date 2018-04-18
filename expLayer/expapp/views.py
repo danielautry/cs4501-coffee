@@ -62,8 +62,8 @@ def login(request):
             'password': password
         }
         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-        req = urllib.request.Request('http://models-api:8000/customer/find/', data=post_encoded, method='POST')
-        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-        resp = json.loads(resp_json)
-        return JsonResponse(resp)
+        req = urllib.request.Request('http://models-api:8000/customer/login/', data=post_encoded, method='POST')
+        auth_json = urllib.request.urlopen(req).read().decode('utf-8')
+        auth = json.loads(auth_json)
+        return JsonResponse(auth, safe=False)
     return HttpResponse("Not POST in EXP")

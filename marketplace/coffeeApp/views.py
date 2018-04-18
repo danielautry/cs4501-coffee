@@ -47,12 +47,12 @@ def createAccount(request):
             email = form.cleaned_data['email']
             cardNumber = form.cleaned_data['cardNumber']
             password = form.cleaned_data['password']
-            # hashedPassword = make_password(password, salt=None, hasher='default')
+            hashedPassword = make_password(password, salt=None, hasher='default')
             post_data = {
                 'name': name,
                 'email': email,
                 'cardNumber': cardNumber,
-                'password': password
+                'password': hashedPassword
             }
             post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
             req = urllib.request.Request('http://exp-api:8000/customer/create/', data=post_encoded, method='POST')
@@ -68,12 +68,12 @@ def login(request):
     email = ''
     password = ''
     post_data = {}
+    error_data = {"Error" : "Login Failed"}
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            # hashedPassword = make_password(password, salt=None, hasher='default')
             post_data = {
                 'email': email,
                 'password': password
@@ -82,7 +82,47 @@ def login(request):
             req = urllib.request.Request('http://exp-api:8000/customer/login/', data=post_encoded, method='POST')
             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
             resp = json.loads(resp_json)
-            return JsonResponse(resp, safe=False)
+            #if resp doesnt have ok set to true:
+            if not resp or not resp['ok']:
+                #send back to login page
+                return JsonResponse(error_data)
+            authenticator = resp['Authenticator']
+            response = HttpResponseRedirect(next)
+            response.set_cookie("auth", authenticator)
     else:
         form = LoginForm()
     return render(request, 'coffeeApp/loggedin.html', post_data)
+
+# def createReview(request):
+
+    # Try to get the authenticator cookie
+    # auth = request.COOKIES.get('auth')
+    #
+    # # If the authenticator cookie wasn't set...
+    # if not auth:
+    #   # Handle user not logged in while trying to create a listing
+    #   return HttpResponseRedirect(reverse("login") + "?next=" + reverse("loggedin")
+    #
+    # # If we received a GET request instead of a POST request...
+    # if request.method == 'GET':
+    #     # Return to form page
+    #     return render("loggedin.html", ...)
+    #
+    # # Otherwise, create a new form instance with our POST data
+    # f = create_listing_form(request.POST)
+    #
+    # # ...
+    #
+    # # Send validated information to our experience layer
+    # resp = create_listing_exp_api(auth, ...)
+    #
+    # # Check if the experience layer said they gave us incorrect information
+    # if resp and not resp['ok']:
+    #     if resp['error'] == exp_srvc_errors.E_UNKNOWN_AUTH:
+    #         # Experience layer reports that the user had an invalid authenticator --
+    #         #   treat like user not logged in
+    #         return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing")
+    #
+    # # ...
+    #
+    # return render("create_listing_success.html", ...)

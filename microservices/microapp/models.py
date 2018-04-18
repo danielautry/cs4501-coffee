@@ -28,6 +28,14 @@ class Sale(models.Model):
     def __str__(self):
         return self.salesman
 
+class Review(models.Model):
+    text = models.CharField(max_length=400)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    coffeeProduct = models.ForeignKey(CoffeeProduct, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
+
 class Authenticator(models.Model):
     user_id = models.CharField(max_length=100)
     authenticator = models.CharField(max_length=255, primary_key=True)

@@ -10,7 +10,7 @@ import hmac
 import datetime
 import pdb
 from django.contrib.auth.hashers import make_password, check_password
-# import settings
+from django.conf import settings
 
 def index(request):
     return JsonResponse({})
@@ -70,22 +70,13 @@ def viewCustomer(request, num):
         })
 
 def createCustomer(request):
-
-    #CREATE AUTHENTICATOR HERE
-    # authString = hmac.new(
-    #     key = settings.SECRET_KEY.encode('utf-8'),
-    #     msg = os.urandom(32),
-    #     digestmod = 'sha256',
-    # ).hexdigest()
-
     if request.method == "POST":
-        #first create customer to DB
         name = request.POST['name']
         email = request.POST['email']
         cardNumber = request.POST['cardNumber']
         password = request.POST['password']
         cust = Customer.objects.create(name = name, email = email, cardNumber = cardNumber, password = password)
-        id = cust.id #THIS LINE IS WRONG BUT ALMOST RIGHT
+        id = cust.id
         cust.save()
         jsonCust = model_to_dict(cust)
         jsonCust = {
@@ -94,29 +85,36 @@ def createCustomer(request):
             "Card Number" : cardNumber,
             "Password" : password
         }
-
-        # Authenticator next
-        # date_now = datetime.datetime.now()
-        # auth = Authenticator.objects.create(user_id = id, authenticator = authString, date_created = date_now)
-        # auth.save()
-
         return JsonResponse(jsonCust)
     return HttpResponse("createCustomer Failed")
 
-def findCustomer(request):
-    error_data = {"Error" : "Invalid User"}
+def login(request):
+    error_data = {'Error' : 'User Invalid'}
     if request.method == "POST":
-        #lookup customer by email and password
         email = request.POST['email']
         password = request.POST['password']
-        cust = Customer.objects.get(email = email, password = password)
-        if Customer.objects.filter(email = email, password = password).exists():
-            # if check_password(password, cust.password):
-            data = {
-                "Email" : cust.email,
-                "Password" : cust.password
+        cust = Customer.objects.get(email = email)
+        if Customer.objects.filter(email = email).exists():
+            if check_password(password, cust.password):
+                # data = {
+                #     "Email" : cust.email,
+                #     "Password" : cust.password
+                #     }
+                authString = hmac.new(
+                    key = settings.SECRET_KEY.encode('utf-8'),
+                    msg = os.urandom(32),
+                    digestmod = 'sha256',
+                ).hexdigest()
+                date_now = datetime.datetime.now()
+                auth = Authenticator.objects.create(user_id = cust.id, authenticator = authString, date_created = date_now)
+                auth.save()
+                authenticator = {
+                    'ID' : cust.id,
+                    'Authenticator' : authString,
+                    'Date' : date_now,
+                    'ok' : True
                 }
-            return JsonResponse(data, safe=False)
+                return JsonResponse(authenticator, safe=False)
     return JsonResponse(error_data)
 
 def destroyCustomer(request, num):
