@@ -15,39 +15,59 @@ from django.conf import settings
 def index(request):
     return JsonResponse({})
 
-def viewCoffeeProduct(request, num):
+def viewProduct(request, num):
+    #return JsonResponse({"view ": "product"})
     try:
-        coffeeProd = get_object_or_404(CoffeeProduct, pk = num)
+        prod = get_object_or_404(Product, pk = num)
         if request.method == "POST":
-            coffeeProd.price = request.POST.get('newPrice')
-            coffeeProd.save()
+            prod.product = request.POST.get('product')
+            prod.price = request.POST.get('price')
+            prod.save()
         data = {
-            "Coffee_Product" : coffeeProd.coffeeType,
-            "Price" : coffeeProd.price
+            "Product" : prod.product,
+            "Price" : prod.price
             }
         return JsonResponse(data, safe=False)
     except:
         return JsonResponse({
-            "Error": "Coffee Product does not exist"
+            "Error": "Product does not exist"
         })
 
+def createProduct(request):
 
-def createCoffeeProduct(request):
     if request.method == "POST":
-        coffeeType = request.POST.get('coffeeType')
-        price = request.POST.get('price')
-        coffeeProd = CoffeeProduct.objects.create(price = price, coffeeType = coffeeType)
-        coffeeProd.save()
-        # return JsonResponse(model_to_dict(coffeeProd))
-        return HttpResponse("Success!")
-    return HttpResponse("createCoffeeProduct Failed")
+        #get user info from auth:
+        auth = request.POST['auth']
+        existingAuth = Authenticator.objects.get(authenticator = auth)
+        if not existingAuth:
+            return JsonResponse({'Error' : 'Invalid Auth'})
 
-def destroyCoffeeProduct(request, num):
-    coffeeProd = get_object_or_404(CoffeeProduct, pk = num)
+        #customerID = existingAuth.user_id
+
+        #get other review fields
+        product = request.POST['product']
+        price = request.POST['price']
+        #find objects in db
+        #customer = Customer.objects.get(pk = customerID)
+
+        prodInstance = Product.objects.create(product = product, price = price)
+        #id = revi.id
+        prodInstance.save()
+
+        jsonRevi = {
+            "product" : product,
+            "price" : price
+        }
+        return JsonResponse(jsonRevi)
+    return HttpResponse("createCustomer Failed")
+
+
+def destroyProduct(request, num):
+    prodInstance = get_object_or_404(Product, pk = num)
     if request.method == "POST":
-        coffeeProd.delete()
+        prodInstance.delete()
         return HttpResponse("Delete Successful")
-    return HttpResponse("DeleteCoffeeProduct Failed")
+    return HttpResponse("DeleteProduct Failed")
 
 def viewCustomer(request, num):
     try:
@@ -124,90 +144,44 @@ def destroyCustomer(request, num):
         return HttpResponse("Delete Successful")
     return HttpResponse("destroyCustomer Failed")
 
-def viewSale(request, num):
-    try:
-        purchase = Sale.objects.get(pk = num)
-        if request.method == "POST":
-            purchase.amount = request.POST.get('newAmount')
-            purchase.save()
-        data1 = serializers.serialize('json', [purchase,])
-        struct = json.loads(data1)
-        data1 = json.dumps(struct[0])
-        return HttpResponse(data1)
-    except:
-        return JsonResponse({
-            "Error": "Sale does not exist"
-        })
+# def viewSale(request, num):
+#     try:
+#         purchase = Sale.objects.get(pk = num)
+#         if request.method == "POST":
+#             purchase.amount = request.POST.get('newAmount')
+#             purchase.save()
+#         data1 = serializers.serialize('json', [purchase,])
+#         struct = json.loads(data1)
+#         data1 = json.dumps(struct[0])
+#         return HttpResponse(data1)
+#     except:
+#         return JsonResponse({
+#             "Error": "Sale does not exist"
+#         })
 
 
-def createSale(request):
-    if request.method == "POST":
-        salesman = request.POST.get('salesman')
-        amount = request.POST.get('amount')
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        coffeeType = request.POST.get('coffeeType')
+# def createSale(request):
+#     if request.method == "POST":
+#         amount = request.POST.get('amount')
+#         name = request.POST.get('name')
+#         email = request.POST.get('email')
+#         product = request.POST.get('product')
+#
+#         #GUNNA BE SOME ISSUES HERE - UNIQUE PRODUCTS
+#         cust = Customer.objects.get(name = name, email = email)
+#         product = Product.objects.get(product = product)
+#
+#         purchase = Sale.objects.create(salesman = salesman, amount = amount, customer = cust, product = product)
+#         purchase.save()
+#         return HttpResponse(purchase)
+#     return HttpResponse("createSale Failed")
 
-        cust = Customer.objects.get(name = name, email = email)
-        coffee = CoffeeProduct.objects.get(coffeeType = coffeeType)
-
-        purchase = Sale.objects.create(salesman = salesman, amount = amount, customer = cust, coffeeProduct = coffee)
-        purchase.save()
-        return HttpResponse(purchase)
-    return HttpResponse("createSale Failed")
-
-def destroySale(request, num):
-    purchase = get_object_or_404(Sale, pk = num)
-    if request.method == "POST":
-        purchase.delete()
-        return HttpResponse("Delete Successful")
-    return HttpResponse("destroySale Failed")
+# def destroySale(request, num):
+#     purchase = get_object_or_404(Sale, pk = num)
+#     if request.method == "POST":
+#         purchase.delete()
+#         return HttpResponse("Delete Successful")
+#     return HttpResponse("destroySale Failed")
 
 
 #start jeremy Tuesday edits
-
-def viewReview(request, num):
-    try:
-        curReview = Review.objects.get(pk = num)
-        if request.method == "POST":
-            curReview.amount = request.POST.get('newReview')
-            curReview.save()
-        data1 = serializers.serialize('json', [curReview,])
-        struct = json.loads(data1)
-        data1 = json.dumps(struct[0])
-        return HttpResponse(data1)
-    except:
-        return JsonResponse({
-            "Error": "Sale does not exist"
-        })
-
-
-def createReview(request):
-
-    if request.method == "POST":
-        #get user info from auth:
-        auth = request.POST['auth']
-        existingAuth = Authenticator.objects.get(authenticator = auth)
-        if not existingAuth:
-            return JsonResponse({'Error' : 'Invalid Auth'})
-
-        customerID = existingAuth.user_id
-
-        #get other review fields
-        text = request.POST['text']
-        coffeeName = request.POST['coffeeProduct']
-
-        #find objects in db
-        customer = Customer.objects.get(pk = customerID)
-        coffeeProduct = CoffeeProduct.objects.get(coffeeType = coffeeName)
-
-        revi = Review.objects.create(text = text, customer = customer, coffeeProduct = coffeeProduct)
-        #id = revi.id
-        revi.save()
-
-        jsonRevi = {
-            "text" : text,
-            "coffeeProduct" : coffeeName
-        }
-        return JsonResponse(jsonRevi)
-    return HttpResponse("createCustomer Failed")

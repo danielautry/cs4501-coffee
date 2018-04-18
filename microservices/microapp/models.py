@@ -2,12 +2,12 @@ from django.db import models
 from django.http import JsonResponse
 
 
-class CoffeeProduct(models.Model):
-    coffeeType = models.CharField(max_length=60, unique=True)
-    price = models.IntegerField(default=0)
+class Product(models.Model):
+    product = models.CharField(max_length=60, unique=True)
+    price = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.coffeeType
+        return self.product
 
 
 class Customer(models.Model):
@@ -20,21 +20,15 @@ class Customer(models.Model):
         return self.name
 
 class Sale(models.Model):
-    salesman = models.CharField(max_length=100)
+    #this might cause an error!!!!!!
+    #salesman = models.ForeignKey(Customer, on_delete=models.CASCADE)
     amount = models.IntegerField(default=0)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    coffeeProduct = models.ForeignKey(CoffeeProduct, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.salesman
+        return self.product
 
-class Review(models.Model):
-    text = models.CharField(max_length=400)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    coffeeProduct = models.ForeignKey(CoffeeProduct, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.text
 
 class Authenticator(models.Model):
     user_id = models.CharField(max_length=100)

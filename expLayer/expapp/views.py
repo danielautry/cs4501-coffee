@@ -12,8 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request):
     return HttpResponse("expLayer")
 
-def viewCoffeeProduct(request, num):
-    req = urllib.request.Request('http://models-api:8000/coffeeProduct/' + str(num) + '/')
+def viewProduct(request, num):
+    req = urllib.request.Request('http://models-api:8000/product/' + str(num) + '/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     resp = json.loads(resp_json)
     return JsonResponse(resp)
@@ -72,20 +72,20 @@ def login(request):
 
 #### Jeremy Tuesday edits
 @csrf_exempt
-def createReview(request):
+def createProduct(request):
     if request.method == "POST":
-        text = request.POST['text']
-        coffeeProduct = request.POST['coffeeProduct']
+        product = request.POST['product']
+        price = request.POST['price']
         auth = request.POST['auth']
         post_data = {
-            'text' : text,
-            'coffeeProduct' : coffeeProduct,
+            'product' : product,
+            'price' : price,
             'auth' : auth
         }
         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-        req = urllib.request.Request('http://models-api:8000/review/create/', data=post_encoded, method='POST')
+        req = urllib.request.Request('http://models-api:8000/product/create/', data=post_encoded, method='POST')
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
-        return JsonResponse(post_data, safe=False)
+        return JsonResponse(resp, safe=False)
 
     return JsonResponse({'Error' : 'Exp Layer'})

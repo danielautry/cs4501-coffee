@@ -1,0 +1,12 @@
+<html>
+   <body>
+     {% csrf_token %}
+      Welcome <strong>{{name}}</strong>!
+      <br>
+      Your account has been created with the email address: <strong>{{email}}</strong>
+      <br>
+      Log in below!
+      <br>
+      <a href="/signin">Sign in</a>
+   </body>
+</html>
