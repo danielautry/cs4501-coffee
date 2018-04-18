@@ -1,14 +1,38 @@
+{% load static %}
 <html>
   <head>
+    <title>JD Coffee</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet"  type="text/css" href="{% static 'coffeeApp/style.css' %}"/>
+    <link href="https://fonts.googleapis.com/css?family=Playball|Satisfy|Tangerine|Yellowtail" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
-   <body>
-      <form name="form" action = "{% url "login" %}" method="post">
+   <body class="signup">
+      <div class="container">
+      <form class="signup-main" name="form" action = "{% url "login" %}" method="post">
         {% csrf_token %}
-        <input type="text" placeholder="email" name="email"/>
-        <input type="text" placeholder="password" name="password"/>
-        <button type="submit" value="submit">
-          <strong>Submit</strong>
-        </button>
+        <h2 class="signup-title">Sign In</h2>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Name">Email</label>
+              <input type="text" class="form-control" name="email"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="Email">Password</label>
+              <input type="text" class="form-control" name="password"/>
+            </div>
+          </div>
+        </div>
+        <button type="submit" value="submit" class="btn btn-primary form-submit">Submit</button>
       </form>
+    </div>
    </body>
 </html>

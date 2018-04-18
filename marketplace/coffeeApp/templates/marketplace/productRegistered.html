@@ -1,12 +1,32 @@
+{% load static %}
 <html>
-   <body>
-     {% csrf_token %}
-     Your Product has been registered with the following info:
+  <head>
+    <title>JD Coffee</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet"  type="text/css" href="{% static 'coffeeApp/style.css' %}"/>
+    <link href="https://fonts.googleapis.com/css?family=Playball|Satisfy|Tangerine|Yellowtail" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+   <body class="signup">
+    <div class="container">
+      {% csrf_token %}
+      <h2 class="account-title">Your product has been registered with the following info:
+        <br>
+        <br>
+       Product: <strong>{{product}}</strong>
+       <br>
+       Price: <strong>{{price}}</strong>
+     </h2>
      <br>
-      Name: <strong>{{product}}</strong>
-      <br>
-      Price: <strong>{price}}</strong>
-      <br>
-      <a href="/">Return to Home</a>
+      <div class="row">
+        <a href="/productDetail/"><div class="btn btn-primary account-button">View other products</div></a>
+      </div>
+      <div class="row">
+        <a href="/"><div class="btn btn-primary account-button">Back to Home</div></a>
+      </div>
+    </div>
    </body>
 </html>

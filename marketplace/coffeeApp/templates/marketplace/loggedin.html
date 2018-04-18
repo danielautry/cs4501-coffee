@@ -1,12 +1,27 @@
+{% load static %}
 <html>
-   <body>
-     {% csrf_token %}
-     You are logged in.
-     <br>
-      Your email is <strong>{{email}}</strong>
+  <head>
+    <title>JD Coffee</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet"  type="text/css" href="{% static 'coffeeApp/style.css' %}"/>
+    <link href="https://fonts.googleapis.com/css?family=Playball|Satisfy|Tangerine|Yellowtail" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+   <body class="signup">
+    <div class="container">
+      <h2 class="account-title">You are logged in.<br>
+       Your email is <strong>{{email}}</strong></h2>
       <br>
-      <a href="productForm">Create a new product</a>
       <br>
-      <a href="/">Check out the existing products</a>
+      <div class="row">
+        <a href="productForm"><div class="btn btn-primary account-button">Create Product</div></a>
+      </div>
+      <div class="row">
+        <a href="/"><div class="btn btn-primary account-button">Back to Home</div></a>
+      </div>
+    </div>
    </body>
 </html>
