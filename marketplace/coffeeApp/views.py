@@ -14,7 +14,11 @@ import pdb
 from django.contrib.auth.hashers import make_password, check_password
 
 def index(request):
-    template = loader.get_template('marketplace/index.html')
+    auth = request.COOKIES.get('auth')
+    if auth:
+        template = loader.get_template('marketplace/indexLoggedIn.html')
+    if not auth:
+        template = loader.get_template('marketplace/indexMain.html')
     return HttpResponse(template.render(request))
 
 def showProduct(request, num):
@@ -103,14 +107,16 @@ def logout(request):
     req = urllib.request.Request('http://exp-api:8000/customer/logout/', data=post_encoded, method='POST')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     resp = json.loads(resp_json)
-    # response.delete_cookie("auth")
-    return JsonResponse(resp, safe=False)
+    response = render(request, "marketplace/indexMain.html")
+    if auth:
+        response.delete_cookie("auth")
+        return response
+    return response
 
 @csrf_exempt
 def createProduct(request):
     auth = request.COOKIES.get('auth')
     if not auth:
-        #or something !!!!!
         return HttpResponse("NO auth")
 
     # if request.method == "GET":

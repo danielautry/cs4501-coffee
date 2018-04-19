@@ -181,8 +181,9 @@ hr {
 
 .detail-block {
   margin: 70px 0;
-  display: inline-block;
-  width: 33%;
+  /*display: inline-block;*/
+  width: 100%;
+  text-align: center;
   font-size: 25px;
   font-weight: 300;
   background: white;
