@@ -93,10 +93,18 @@ def login(request):
         form = LoginForm()
     return render(request, 'marketplace/loggedin.html', post_data)
 
-
-
-##### Start jeremy editing Tuesday
-
+@csrf_exempt
+def logout(request):
+    auth = request.COOKIES.get("auth")
+    post_auth = {
+        "Authenticator": auth
+    }
+    post_encoded = urllib.parse.urlencode(post_auth).encode('utf-8')
+    req = urllib.request.Request('http://exp-api:8000/customer/logout/', data=post_encoded, method='POST')
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    resp = json.loads(resp_json)
+    # response.delete_cookie("auth")
+    return JsonResponse(resp, safe=False)
 
 @csrf_exempt
 def createProduct(request):
@@ -122,4 +130,5 @@ def createProduct(request):
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
         return render(request, 'marketplace/productRegistered.html', resp)
-    return HttpResponse("createReview Failed")
+        # return JsonResponse(resp)
+    return HttpResponse("createProduct Failed")

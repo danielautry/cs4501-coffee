@@ -14,8 +14,7 @@ urlpatterns = [
     #url(r'^sale/destroy/(?P<num>[0-9]+)/',views.destroySale, name = 'destroySale'),
     #url(r'^sale/create/',views.createSale, name = 'createSale'),
     url(r'^customer/login/',views.login, name = 'login'),
-
-    #jeremy tuesday edits below
+    url(r'^customer/logout/',views.logout, name = 'logout'),
     # url(r'^review/(?P<num>[0-9]+)/',views.viewReview, name = 'viewReview'),
     # #url(r'^review/destroy/(?P<num>[0-9]+)/',views.destroyReview, name = 'destroyReview'),
     # url(r'^review/create/',views.createReview, name = 'createReview'),

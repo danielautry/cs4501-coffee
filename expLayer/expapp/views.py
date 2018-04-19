@@ -46,7 +46,7 @@ def createCustomer(request):
         req = urllib.request.Request('http://models-api:8000/customer/create/', data=post_encoded, method='POST')
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
-        return JsonResponse(resp)
+        return JsonResponse(post_data)
     return HttpResponse("Not POST in EXP")
 
 @csrf_exempt
@@ -68,9 +68,20 @@ def login(request):
         return JsonResponse(auth, safe=False)
     return HttpResponse("Not POST in EXP")
 
+@csrf_exempt
+def logout(request):
+    if request.method == "POST":
+        auth = request.POST["Authenticator"]
+        post_auth = {
+            "Authenticator": auth
+        }
+        post_encoded = urllib.parse.urlencode(post_auth).encode('utf-8')
+        req = urllib.request.Request('http://models-api:8000/customer/logout/', data=post_encoded, method='POST')
+        auth_json = urllib.request.urlopen(req).read().decode('utf-8')
+        # auth = json.loads(auth_json)
+        return JsonResponse({'Success' : 'Auth deleted'}, safe=False)
+    return HttpResponse("Delete Auth in EXP failed")
 
-
-#### Jeremy Tuesday edits
 @csrf_exempt
 def createProduct(request):
     if request.method == "POST":
@@ -82,10 +93,10 @@ def createProduct(request):
             'price' : price,
             'auth' : auth
         }
+        expCheck = {'exp' : 'in exp layer'}
         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
         req = urllib.request.Request('http://models-api:8000/product/create/', data=post_encoded, method='POST')
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
         return JsonResponse(resp, safe=False)
-
     return JsonResponse({'Error' : 'Exp Layer'})

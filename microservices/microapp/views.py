@@ -25,7 +25,8 @@ def viewProduct(request, num):
             prod.save()
         data = {
             "Product" : prod.product,
-            "Price" : prod.price
+            "Price" : prod.price,
+            "Seller Email" : prod.sellerEmail
             }
         return JsonResponse(data, safe=False)
     except:
@@ -34,32 +35,27 @@ def viewProduct(request, num):
         })
 
 def createProduct(request):
-
     if request.method == "POST":
         #get user info from auth:
         auth = request.POST['auth']
         existingAuth = Authenticator.objects.get(authenticator = auth)
         if not existingAuth:
-            return JsonResponse({'Error' : 'Invalid Auth'})
-
-        #customerID = existingAuth.user_id
-
-        #get other review fields
+            return JsonResponse({'Error' : 'Invalid Auth'}, safe=False)
+        customerID = existingAuth.user_id
+        customer = Customer.objects.get(id = customerID)
+        customerEmail = customer.email
         product = request.POST['product']
         price = request.POST['price']
-        #find objects in db
-        #customer = Customer.objects.get(pk = customerID)
 
-        prodInstance = Product.objects.create(product = product, price = price)
-        #id = revi.id
+        prodInstance = Product.objects.create(product = product, price = price, sellerEmail = customerEmail)
         prodInstance.save()
-
-        jsonRevi = {
+        jsonProd = {
             "product" : product,
-            "price" : price
+            "price" : price,
+            "sellerEmail" : customerEmail
         }
-        return JsonResponse(jsonRevi)
-    return HttpResponse("createCustomer Failed")
+        return JsonResponse(jsonProd)
+    return HttpResponse("createProduct Failed")
 
 
 def destroyProduct(request, num):
@@ -135,6 +131,18 @@ def login(request):
                     'ok' : True
                 }
                 return JsonResponse(authenticator, safe=False)
+    return JsonResponse(error_data)
+
+def logout(request):
+    error_data = {'Error' : 'User Invalid'}
+    delete_successful = False
+    if request.method == "POST":
+        auth = request.POST['Authenticator']
+        existingAuth = Authenticator.objects.get(authenticator = auth)
+        if not existingAuth:
+            return JsonResponse({'Error' : 'You are already logged out'}, safe=False)
+        existingAuth.delete()
+        return JsonResponse({"Deleted" : True})
     return JsonResponse(error_data)
 
 def destroyCustomer(request, num):

@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^customer/create/',views.createCustomer, name = 'createCustomer'),
     url(r'^customer/(?P<num>[0-9]+)/',views.viewCustomer, name = 'viewCustomer'),
     url(r'^customer/login/',views.login, name = 'login'),
-
-    # Jeremy tuesday edits
-    url(r'^product/create/',views.createProduct, name = 'createProduct')
+    url(r'^customer/logout/',views.logout, name = 'logout'),
+    url(r'^product/create/',views.createProduct, name = 'createProduct'),
 ]

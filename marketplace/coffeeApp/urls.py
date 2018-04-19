@@ -11,10 +11,8 @@ urlpatterns = [
     url(r'^account/', views.createAccount, name='createAccount'),
     url(r'^signin/', TemplateView.as_view(template_name='marketplace/signin.html')),
     url(r'^login/?next=loggedin', views.login, name='login'),
+    url(r'^logout/', views.logout, name='logout'),
     url(r'^loggedin/', TemplateView.as_view(template_name='marketplace/loggedin.html')),
-
-    #jeremy tuesday edits below
     url(r'^productForm/', TemplateView.as_view(template_name='marketplace/makeProduct.html'), name='productForm'),
     url(r'^createProduct/', views.createProduct, name='createProduct'),
-
 ]

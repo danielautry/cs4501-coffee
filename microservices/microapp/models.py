@@ -5,7 +5,8 @@ from django.http import JsonResponse
 class Product(models.Model):
     product = models.CharField(max_length=60, unique=True)
     price = models.CharField(max_length=30)
-
+    #unique email from customer auth lookup
+    sellerEmail = models.CharField(max_length=100)
     def __str__(self):
         return self.product
 
