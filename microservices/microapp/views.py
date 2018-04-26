@@ -44,8 +44,16 @@ def createProduct(request):
         customerID = existingAuth.user_id
         customer = Customer.objects.get(id = customerID)
         customerEmail = customer.email
-        product = request.POST['product']
-        price = request.POST['price']
+        product = ''
+        price = ''
+        if 'product' not in (request.POST):
+            return JsonResponse({'Error' : 'Invalid Product'})
+        else:
+            product = request.POST['product']
+        if 'price' not in (request.POST):
+            return JsonResponse({'Error' : 'Invalid Price'})
+        else:
+            price = request.POST['price']
 
         prodInstance = Product.objects.create(product = product, price = price, sellerEmail = customerEmail)
         prodInstance.save()
@@ -55,15 +63,17 @@ def createProduct(request):
             "sellerEmail" : customerEmail
         }
         return JsonResponse(jsonProd)
-    return HttpResponse("createProduct Failed")
+    return JsonResponse({'Error' : 'createProduct failed'})
 
 
 def destroyProduct(request, num):
-    prodInstance = get_object_or_404(Product, pk = num)
+    prod = get_object_or_404(Product, pk = num)
+    success = {"Status" : "Delete Successful"}
+    error = {"Error" : "Delete Failed"}
     if request.method == "POST":
-        prodInstance.delete()
-        return HttpResponse("Delete Successful")
-    return HttpResponse("DeleteProduct Failed")
+        prod.delete()
+        return JsonResponse(success, safe=False)
+    return JsonResponse(error, safe=False)
 
 def viewCustomer(request, num):
     try:
@@ -147,10 +157,12 @@ def logout(request):
 
 def destroyCustomer(request, num):
     cust = get_object_or_404(Customer, pk = num)
+    success = {"Status" : "Delete Successful"}
+    error = {"Error" : "Delete Failed"}
     if request.method == "POST":
         cust.delete()
-        return HttpResponse("Delete Successful")
-    return HttpResponse("destroyCustomer Failed")
+        return JsonResponse(success, safe=False)
+    return JsonResponse(error, safe=False)
 
 # def viewSale(request, num):
 #     try:

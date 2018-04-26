@@ -1,5 +1,8 @@
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
+from django.core.exceptions import *
+from django.utils.datastructures import MultiValueDictKeyError
+import json
 from .models import *
 
 class ProductTestCases(TestCase):
@@ -29,35 +32,94 @@ class ProductTestCases(TestCase):
         self.assertEquals(resp_json, '{"Error": "Product does not exist"}')
         self.assertEquals(response.status_code, 200)
 
+    def testCreateProduct(self):
+        responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'test'})
+        resp = (responseLogin.content).decode("utf-8")
+        resp_string = resp.replace("'", "\"")
+        resp_json = json.loads(resp_string)
+        auth = resp_json['Authenticator']
+        responseCreate = self.client.post(reverse('createProduct'), {'product' : 'Keystone', 'price' : '5', 'auth' : auth})
+        self.assertEqual(responseCreate.status_code, 200)
+
+    def testCreateProductInvalidProduct(self):
+        responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'test'})
+        resp = (responseLogin.content).decode("utf-8")
+        resp_string = resp.replace("'", "\"")
+        resp_json = json.loads(resp_string)
+        auth = resp_json['Authenticator']
+        responseCreate = self.client.post(reverse('createProduct'), {'invalidField' : 'Keystone', 'price' : '5', 'auth' : auth})
+        resp_prod = (responseCreate.content).decode("utf-8")
+        self.assertEqual(resp_prod, '{"Error": "Invalid Product"}')
+
+    def testCreateProductInvalidPrice(self):
+        responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'test'})
+        resp = (responseLogin.content).decode("utf-8")
+        resp_string = resp.replace("'", "\"")
+        resp_json = json.loads(resp_string)
+        auth = resp_json['Authenticator']
+        responseCreate = self.client.post(reverse('createProduct'), {'product' : 'Keystone', 'invalidField' : '5', 'auth' : auth})
+        resp_prod = (responseCreate.content).decode("utf-8")
+        self.assertEqual(resp_prod, '{"Error": "Invalid Price"}')
+
     def testLogin(self):
-        responseLogin = self.client.login(username = 'mscott@dm.com', password = 'test')
-        self.assertEqual(responseLogin, True)
+        responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'test'})
+        self.assertEqual(responseLogin.status_code, 200)
 
-    # def testLogout(self):
-    #     responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'test'})
-    #     responseLogout = self.client.post(reverse('logout'), {'auth' : '1'})
-    #     self.assertEqual(responseCreate.status_code, 200)
+    def testLoginPasswordInvalid(self):
+        responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'invalid'})
+        resp = (responseLogin.content).decode("utf-8")
+        self.assertEquals(resp, '{"Error": "User Invalid"}')
 
-    # def testCreateProduct(self):
-    #     self.client.login('mscott@dm.com','test')
-    #     responseCreate = self.client.post(reverse('createProduct'), {'product' : 'Keystone', 'price' : '5', 'sellerEmail' : 'mscott@dm.com'})
-    #     self.assertEqual(responseCreate.status_code, 200)
-    #
-    # def testUpdateProduct(self):
-    #     self.client.post(reverse('viewProduct', args={1}), {'price' : '30'})
-    #     responseUpdate = self.client.get(reverse('viewProduct', args={1}))
-    #     resp_json = (responseUpdate.content).decode("utf-8")
-    #     self.assertContains(responseUpdate, '30')
-    #
-    # def testUpdateProductDoesNotWork(self):
-    #     self.client.post(reverse('viewProduct', args={1}), {'wrongField' : '30'})
-    #     responseUpdate = self.client.get(reverse('viewProduct', args={1}))
-    #     resp_json = (responseUpdate.content).decode("utf-8")
-    #     self.assertEquals(resp_json, '{"Error": "Product does not exist"}')
-    #
-    # def testDeleteProduct(self):
-    #     responseDelete = self.client.delete('/product/1/')
-    #     self.assertEqual(responseDelete.status_code, 200)
+    def testLogout(self):
+        responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'test'})
+        resp = (responseLogin.content).decode("utf-8")
+        resp_string = resp.replace("'", "\"")
+        resp_json = json.loads(resp_string)
+        auth = resp_json['Authenticator']
+        responseLogout = self.client.post(reverse('logout'), {'Authenticator' : auth})
+        self.assertEqual(responseLogout.status_code, 200)
+
+    def testUpdateProduct(self):
+        self.client.post(reverse('viewProduct', args={1}), {'product' : 'Beer','price' : '30'})
+        responseUpdate = self.client.get(reverse('viewProduct', args={1}))
+        self.assertContains(responseUpdate, '30')
+
+    def testUpdateProductField(self):
+        self.client.post(reverse('viewProduct', args={1}), {'product' : 'Beer','price' : '20'})
+        responseUpdate = self.client.get(reverse('viewProduct', args={1}))
+        self.assertContains(responseUpdate, 'Beer')
+
+    def testUpdatePriceField(self):
+        self.client.post(reverse('viewProduct', args={1}), {'product' : 'Coffee','price' : '40'})
+        responseUpdate = self.client.get(reverse('viewProduct', args={1}))
+        self.assertContains(responseUpdate, '40')
+
+    def testUpdateProductDoesNotWork(self):
+        self.client.post(reverse('viewProduct', args={1}), {'wrongField' : '20'})
+        responseUpdate = self.client.get(reverse('viewProduct', args={1}))
+        resp_json = (responseUpdate.content).decode("utf-8")
+        self.assertEquals(resp_json, '{"Error": "Product does not exist"}')
+
+    def testDeleteProduct(self):
+        responseDelete = self.client.post(reverse('destroyProduct', args={1}))
+        self.assertEqual(responseDelete.status_code, 200)
+
+    def testDeleteAllProducts(self):
+        responseDelete1 = self.client.post(reverse('destroyProduct', args={1}))
+        responseDelete2 = self.client.post(reverse('destroyProduct', args={2}))
+        responseDelete3 = self.client.post(reverse('destroyProduct', args={3}))
+        responseDelete4 = self.client.post(reverse('destroyProduct', args={4}))
+        responseDelete5 = self.client.post(reverse('destroyProduct', args={5}))
+        self.assertEqual(responseDelete1.status_code, 200)
+        self.assertEqual(responseDelete2.status_code, 200)
+        self.assertEqual(responseDelete3.status_code, 200)
+        self.assertEqual(responseDelete4.status_code, 200)
+        self.assertEqual(responseDelete5.status_code, 200)
+
+    def testDeleteProductDoesNotWork(self):
+        responseDelete = self.client.get(reverse('destroyProduct', args={1}))
+        resp_json = (responseDelete.content).decode("utf-8")
+        self.assertEqual(resp_json, '{"Error": "Delete Failed"}')
 
     def tearDown(self):
         pass

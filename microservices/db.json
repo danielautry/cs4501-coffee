@@ -4,6 +4,6 @@
   {"model": "microapp.product", "pk": 3, "fields": {"product": "Gatorade", "price": 30, "sellerEmail": "jh@dm.com"}},
   {"model": "microapp.product", "pk": 4, "fields": {"product": "Guinness", "price": 50, "sellerEmail": "ds@schrutefarms.com"}},
   {"model": "microapp.product", "pk": 5, "fields": {"product": "Milk", "price": 30, "sellerEmail": "ds@schrutefarms.com"}},
-  {"model": "microapp.customer", "pk": 1, "fields": {"name": "Michael Scott", "email": "mscott@dm.com", "cardNumber": "1111222233334444", "password" : "test"}},
+  {"model": "microapp.customer", "pk": 1, "fields": {"name": "Michael Scott", "email": "mscott@dm.com", "cardNumber": "1111222233334444", "password" : "pbkdf2_sha256$30000$qlVki76L3MiO$+MbSAVpSwIPgNlls85IblMTDevn0+k1KVLxZ6YL5iFY="}},
   {"model": "microapp.customer", "pk": 2, "fields": {"name": "Jim Halpert", "email": "jh@dm.com", "cardNumber": "4444333322221111", "password" : "test"}},
   {"model": "microapp.customer", "pk": 3, "fields": {"name": "Dwight Schrute", "email": "ds@schrutefarms.com", "cardNumber": "1234567812345678", "password" : "test"}}]

@@ -29,17 +29,13 @@ class CustomerTestCases(TestCase):
         responseCreate = self.client.post(reverse('createCustomer'), {'name' : 'Daniel', 'email' : 'hello@hello.com', 'cardNumber' : '1234', 'password' : 'test'})
         self.assertEqual(responseCreate.status_code, 200)
 
-    # def testUpdateCardInformation(self):
-    #     self.client.post(reverse('viewCustomer', args={1}), {'newCardNumber' : '5678'})
-    #     responseUpdate = self.client.get(reverse('viewCustomer', args={1}))
-    #     resp_json = (responseUpdate.content).decode("utf-8")
-    #     self.assertContains(responseUpdate, '5678')
+    def login(self):
+        self.client.post(reverse('login', args={1}), {'email' : 'jh@dm.com', 'password' : 'test'})
+        self.assertContains(responseUpdate.status_code, '200')
 
     def testDeleteCustomer(self):
-        responseDelete = self.client.delete('/customer/1/')
+        responseDelete = self.client.post(reverse('destroyCustomer', args={1}))
         self.assertEqual(responseDelete.status_code, 200)
 
     def tearDown(self):
         pass
-
-    # def client.post
