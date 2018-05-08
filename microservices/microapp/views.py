@@ -75,7 +75,8 @@ def createProduct(request):
         jsonProd = {
             "product" : product,
             "price" : price,
-            "sellerEmail" : customerEmail
+            "sellerEmail" : customerEmail,
+            "id" : prodInstance.id
         }
         return JsonResponse(jsonProd)
     return JsonResponse({'Error' : 'createProduct failed'})
