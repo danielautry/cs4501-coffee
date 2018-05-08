@@ -8,8 +8,8 @@ from django.core import serializers
 import urllib.request
 import urllib.parse
 from django.views.decorators.csrf import csrf_exempt
-from elasticsearch import Elasticsearch
-from kafka import KafkaProducer
+# from elasticsearch import Elasticsearch
+# from kafka import KafkaProducer
 
 def index(request):
     return HttpResponse("expLayer")
