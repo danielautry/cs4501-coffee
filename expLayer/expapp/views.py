@@ -8,6 +8,8 @@ from django.core import serializers
 import urllib.request
 import urllib.parse
 from django.views.decorators.csrf import csrf_exempt
+from elasticsearch import Elasticsearch
+from kafka import KafkaProducer
 
 def index(request):
     return HttpResponse("expLayer")
@@ -108,4 +110,28 @@ def createProduct(request):
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
         return JsonResponse(resp, safe=False)
+    return JsonResponse({'Error' : 'Exp Layer'})
+
+@csrf_exempt
+def search(request):
+    # query = ''
+    # post_data = {}
+    # if request.method == "POST":
+    #     query = request.POST['query']
+    #     post_data = {
+    #         'query': query
+    #     }
+    #     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+    #     req = urllib.request.Request('http://models-api:8000/customer/create/', data=post_encoded, method='POST')
+    #     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    #     resp = json.loads(resp_json)
+    #     return JsonResponse(post_data)
+    # # return HttpResponse("Not POST in EXP")
+    # # if request.method != "POST":
+	# es = Elasticsearch(['es'])
+    # query = query
+	# result = es.search(index = 'listing-indexer', body = {'query': {'query_string':{'query':searchTerm}}})
+	# # except Exception as e:
+	# # 	return _error_response(request, "Listing failed.")
+	# searchResults = []
     return JsonResponse({'Error' : 'Exp Layer'})

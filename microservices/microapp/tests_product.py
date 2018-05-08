@@ -41,6 +41,17 @@ class ProductTestCases(TestCase):
         responseCreate = self.client.post(reverse('createProduct'), {'product' : 'Keystone', 'price' : '5', 'auth' : auth})
         self.assertEqual(responseCreate.status_code, 200)
 
+    def testProductList(self):
+        responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'test'})
+        resp = (responseLogin.content).decode("utf-8")
+        resp_string = resp.replace("'", "\"")
+        resp_json = json.loads(resp_string)
+        auth = resp_json['Authenticator']
+        responseCreate = self.client.post(reverse('createProduct'), {'product' : 'Keystone', 'price' : '5', 'auth' : auth})
+        responseAllProd = self.client.get(reverse('viewAllProducts'))
+        resp_prod = (responseAllProd.content).decode("utf-8")
+        self.assertEqual(responseAllProd.status_code, 200)
+
     def testCreateProductInvalidProduct(self):
         responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'test'})
         resp = (responseLogin.content).decode("utf-8")

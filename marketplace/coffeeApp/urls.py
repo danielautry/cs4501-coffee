@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^loggedin/', TemplateView.as_view(template_name='marketplace/loggedin.html')),
     url(r'^productForm/', TemplateView.as_view(template_name='marketplace/makeProduct.html'), name='productForm'),
     url(r'^createProduct/', views.createProduct, name='createProduct'),
+    url(r'^search/', TemplateView.as_view(template_name='marketplace/search.html'), name='search'),
+    url(r'^results/', TemplateView.as_view(template_name='marketplace/searchResults.html')),
 ]

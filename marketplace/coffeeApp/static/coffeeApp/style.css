@@ -15,6 +15,9 @@ body {
   color: black;
 }
 
+.products-body {
+  padding-bottom: 50px;
+}
 
 .main {
   background: url("coffee1.jpg") no-repeat center center fixed;

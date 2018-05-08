@@ -49,8 +49,6 @@ def viewAllProducts(request):
             "Error": "Product does not exist"
         })
 
-
-
 def createProduct(request):
     if request.method == "POST":
         #get user info from auth:
