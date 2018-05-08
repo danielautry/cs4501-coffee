@@ -45,7 +45,7 @@ def productList(request):
         auth = request.COOKIES.get('auth')
 
         if not auth:
-            return render(request, 'marketplace/error.html', auth_data)
+            return render(request, 'marketplace/productList.html', {"productList" : resp})
 
         return render(request, 'marketplace/productListLoggedIn.html', {"productList" : resp})
         #return JsonResponse(resp, safe=False)
