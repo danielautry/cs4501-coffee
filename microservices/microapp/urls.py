@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^product/(?P<num>[0-9]+)/',views.viewProduct, name = 'viewProduct'),
     url(r'^product/destroy/(?P<num>[0-9]+)/',views.destroyProduct, name = 'destroyProduct'),
     url(r'^product/create/',views.createProduct, name = 'createProduct'),
+    url(r'^viewAllProducts/',views.viewAllProducts, name = 'viewAllProducts'),
     url(r'^customer/(?P<num>[0-9]+)/',views.viewCustomer, name = 'viewCustomer'),
     url(r'^customer/destroy/(?P<num>[0-9]+)/',views.destroyCustomer, name = 'destroyCustomer'),
     url(r'^customer/create/',views.createCustomer, name = 'createCustomer'),
@@ -15,6 +16,7 @@ urlpatterns = [
     #url(r'^sale/create/',views.createSale, name = 'createSale'),
     url(r'^customer/login/',views.login, name = 'login'),
     url(r'^customer/logout/',views.logout, name = 'logout'),
+
     # url(r'^review/(?P<num>[0-9]+)/',views.viewReview, name = 'viewReview'),
     # #url(r'^review/destroy/(?P<num>[0-9]+)/',views.destroyReview, name = 'destroyReview'),
     # url(r'^review/create/',views.createReview, name = 'createReview'),

@@ -18,6 +18,15 @@ def viewProduct(request, num):
     resp = json.loads(resp_json)
     return JsonResponse(resp)
 
+def viewAllProducts(request):
+    req = urllib.request.Request('http://models-api:8000/viewAllProducts/')
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    resp = json.loads(resp_json)
+    test_data = {
+        "hey" : "heyyo"
+    }
+    return JsonResponse(resp, safe = False)
+
 def viewCustomer(request, num):
     req = urllib.request.Request('http://models-api:8000/customer/' + str(num) + '/')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')

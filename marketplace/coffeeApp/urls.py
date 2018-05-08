@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^product/(?P<num>[0-9]+)/', views.showProduct, name='showProduct'),
-    url(r'^productDetail/', views.detail, name='detail'),
+    url(r'^productList/', views.productList, name='detail'),
     url(r'^signup/', TemplateView.as_view(template_name='marketplace/signup.html')),
     url(r'^account/', views.createAccount, name='createAccount'),
     url(r'^signin/', TemplateView.as_view(template_name='marketplace/signin.html')),

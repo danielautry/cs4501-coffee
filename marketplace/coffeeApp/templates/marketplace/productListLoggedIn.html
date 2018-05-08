@@ -18,7 +18,7 @@
         <ul>
           <li>JD Coffee</li>
           <li><a href="/" class="u-colorWhite">Home</a></li>
-          <li><a href="/products/" class="u-colorWhite">Products</a></li>
+          <li><a href="/productList/" class="u-colorWhite">Products</a></li>
           <li><a href="/productForm/" class="u-colorWhite">Create Product</a></li>
           <li><a href="/logout/" class="u-colorWhite">Logout</a></li>
         </ul>
@@ -32,19 +32,36 @@
   </div>
   <div class="products-detail container-fluid">
     <h1 class="text-center">Check out the latest products below!</h1>
-    <br>
-    <div class="detail-block text-center">
-      <a href="/product/1/">Hard Coded Product1</a>
-    </div>
-    <div class="detail-block text-center">
-      <a href="/product/2/">Hard Coded Product 2</a>
-    </div>
-    <div class="detail-block text-center">
-      <a href="/product/3/">Hard Coded Product 3</a>
-    </div>
-  </div>
-  <div class="footer container-fluid">
-    <h2 class="footer-title"><b>JD Coffee</b></h2><h2 class="footer-title text-right">109 Shamrock Rd, Charlottesville, VA, 22903</h2>
-  </div>
+
+    <script>
+
+    var productList = JSON.parse('{{ productList | escapejs }}');
+    document.write("hello");
+    //var productList = {{productList|safe}};
+    //var div = document.createElement('divTest');
+    //div.textContent = 'Hello world.';
+    //if(document.body != null){
+    //document.body.appendChild(div);
+  //  }
+      //var toAdd = document.createDocumentFragment();
+    for(var i=0; i < 20; i++){
+      if(productList[i]){
+          var div = document.createElement('div');
+        //  div.id = 'r'+i;
+          //newDiv.className = 'ansbox';
+          productID = productList[i].id;
+          htmlString = "<a href = '/product/" + productID + "'>" + productList[i].product + ".........." + productList[i].price + "</a>";
+          div.style.textAlign = "center";
+          div.style.fontSize = "35px";
+          div.innerHTML = htmlString;
+          document.body.appendChild(div);
+          //toAdd.appendChild(newDiv);
+        }
+
+      }
+
+    //document.appendChild(toAdd);
+    </script>
+
 </body>
 </html>

@@ -26,13 +26,30 @@ def viewProduct(request, num):
         data = {
             "Product" : prod.product,
             "Price" : prod.price,
-            "Seller Email" : prod.sellerEmail
+            "Seller_Email" : prod.sellerEmail
             }
         return JsonResponse(data, safe=False)
     except:
         return JsonResponse({
+            "Error" : "Product does not exist"
+        })
+
+def viewAllProducts(request):
+    try:
+        productDictList = []
+        for product in Product.objects.all():
+            productDict = model_to_dict(product)
+            productDictList.append(productDict)
+
+        dumpJson = json.dumps(productDictList)
+        productJson = json.loads(dumpJson)
+        return JsonResponse(productJson, safe = False)
+    except:
+        return JsonResponse({
             "Error": "Product does not exist"
         })
+
+
 
 def createProduct(request):
     if request.method == "POST":

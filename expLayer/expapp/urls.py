@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^customer/login/',views.login, name = 'login'),
     url(r'^customer/logout/',views.logout, name = 'logout'),
     url(r'^product/create/',views.createProduct, name = 'createProduct'),
+    url(r'^viewAllProducts/', views.viewAllProducts, name = 'viewAllProducts')
 ]
