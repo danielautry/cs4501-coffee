@@ -63,25 +63,29 @@ def createAccount(request):
     cardNumber = ''
     password = ''
     post_data = {}
+    error_data = {"Error" : "Email already taken!"}
     if request.method == 'POST':
         form = NameForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            cardNumber = form.cleaned_data['cardNumber']
-            password = form.cleaned_data['password']
-            hashedPassword = make_password(password, salt=None, hasher='default')
-            post_data = {
-                'name': name,
-                'email': email,
-                'cardNumber': cardNumber,
-                'password': hashedPassword
-            }
-            post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-            req = urllib.request.Request('http://exp-api:8000/customer/create/', data=post_encoded, method='POST')
-            resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-            resp = json.loads(resp_json)
-            return render(request, 'marketplace/account.html', post_data)
+            try:
+                name = form.cleaned_data['name']
+                email = form.cleaned_data['email']
+                cardNumber = form.cleaned_data['cardNumber']
+                password = form.cleaned_data['password']
+                hashedPassword = make_password(password, salt=None, hasher='default')
+                post_data = {
+                    'name': name,
+                    'email': email,
+                    'cardNumber': cardNumber,
+                    'password': hashedPassword
+                }
+                post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+                req = urllib.request.Request('http://exp-api:8000/customer/create/', data=post_encoded, method='POST')
+                resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+                resp = json.loads(resp_json)
+                return render(request, 'marketplace/account.html', post_data)
+            except:
+                return JsonResponse(error_data, safe=False)
     else:
         form = NameForm()
     return render(request, 'marketplace/account.html', post_data)
