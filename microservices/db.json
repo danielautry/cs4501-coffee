@@ -1,12 +1,9 @@
 [
-  {"model": "microapp.coffeeproduct", "pk": 1, "fields": {"coffeeType": "Signature Roast", "price": 20}},
-  {"model": "microapp.coffeeproduct", "pk": 2, "fields": {"coffeeType": "Dark Broast", "price": 10}},
-  {"model": "microapp.coffeeproduct", "pk": 3, "fields": {"coffeeType": "French Vanilla", "price": 30}},
-  {"model": "microapp.coffeeproduct", "pk": 4, "fields": {"coffeeType": "Java Java", "price": 50}},
-  {"model": "microapp.coffeeproduct", "pk": 5, "fields": {"coffeeType": "Medium Broast", "price": 70}},
-  {"model": "microapp.customer", "pk": 1, "fields": {"name": "Michael Scott", "email": "mscott@dm.com", "cardNumber": "1111222233334444"}},
-  {"model": "microapp.customer", "pk": 2, "fields": {"name": "Jim Halpert", "email": "jh@dm.com", "cardNumber": "4444333322221111"}},
-  {"model": "microapp.customer", "pk": 3, "fields": {"name": "Dwight Schrute", "email": "ds@schrutefarms.com", "cardNumber": "1234567812345678"}},
-  {"model": "microapp.sale", "pk": 1, "fields": {"salesman": "Daniel Autry", "amount": 10, "customer": 1, "coffeeProduct": 3}},
-  {"model": "microapp.sale", "pk": 2, "fields": {"salesman": "Daniel Autry", "amount": 11, "customer": 1, "coffeeProduct": 2}},
-  {"model": "microapp.sale", "pk": 3, "fields": {"salesman": "Jeremy Little", "amount": 20, "customer": 3, "coffeeProduct": 3}}]
+  {"model": "microapp.product", "pk": 1, "fields": {"product": "Coffee", "price": 20, "sellerEmail": "mscott@dm.com"}},
+  {"model": "microapp.product", "pk": 2, "fields": {"product": "Bud Light", "price": 10, "sellerEmail": "mscott@dm.com"}},
+  {"model": "microapp.product", "pk": 3, "fields": {"product": "Gatorade", "price": 30, "sellerEmail": "jh@dm.com"}},
+  {"model": "microapp.product", "pk": 4, "fields": {"product": "Guinness", "price": 50, "sellerEmail": "ds@schrutefarms.com"}},
+  {"model": "microapp.product", "pk": 5, "fields": {"product": "Milk", "price": 30, "sellerEmail": "ds@schrutefarms.com"}},
+  {"model": "microapp.customer", "pk": 1, "fields": {"name": "Michael Scott", "email": "mscott@dm.com", "cardNumber": "1111222233334444", "password" : "pbkdf2_sha256$30000$qlVki76L3MiO$+MbSAVpSwIPgNlls85IblMTDevn0+k1KVLxZ6YL5iFY="}},
+  {"model": "microapp.customer", "pk": 2, "fields": {"name": "Jim Halpert", "email": "jh@dm.com", "cardNumber": "4444333322221111", "password" : "test"}},
+  {"model": "microapp.customer", "pk": 3, "fields": {"name": "Dwight Schrute", "email": "ds@schrutefarms.com", "cardNumber": "1234567812345678", "password" : "test"}}]
