@@ -12,7 +12,7 @@
   </head>
    <body class="signup">
       <div class="container">
-      <form class="signup-main" name="form" method="post">
+      <form class="signup-main" name="form" action = "{% url "find" %}" method="post">
         {% csrf_token %}
         <h2 class="signup-title">Find A Product</h2>
         <div class="row">

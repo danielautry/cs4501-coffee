@@ -117,18 +117,17 @@ def createProduct(request):
 
 @csrf_exempt
 def search(request):
+    es = Elasticsearch(['es'])
     # query = ''
-    # post_data = {}
-    # if request.method == "POST":
-    #     query = request.POST['query']
-    #     post_data = {
-    #         'query': query
-    #     }
-    #     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-    #     req = urllib.request.Request('http://models-api:8000/customer/create/', data=post_encoded, method='POST')
-    #     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    #     resp = json.loads(resp_json)
-    #     return JsonResponse(post_data)
+    post_data = {}
+    if request.method == "POST":
+        query = request.POST['name']
+        post_data = {
+            'name': query
+        }
+        result = es.search(index='listing_index', body={'query': {'query_string': {'query': query}}, 'size': 10})
+        # print(es.[hits][hits])
+        return JsonResponse(post_data, safe=False)
     # # return HttpResponse("Not POST in EXP")
     # # if request.method != "POST":
 	# es = Elasticsearch(['es'])

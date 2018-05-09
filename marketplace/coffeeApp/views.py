@@ -8,6 +8,7 @@ import urllib.request
 import urllib.parse
 from .forms import NameForm
 from .forms import LoginForm
+from .forms import SearchForm
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 import pdb
@@ -175,25 +176,26 @@ def createProduct(request):
         return render(request, 'marketplace/error.html', error_data)
 
 @csrf_exempt
-def search(request):
+def find(request):
     # auth = request.COOKIES.get('auth')
     # if not auth:
     #     return HttpResponse("NO auth")
     # query = ''
-    # post_data = {}
-    # if request.method == 'POST':
-    #     form = SearchForm(request.POST)
-    #     if form.is_valid():
-    #         query = form.cleaned_data['query']
-    #         post_data = {
-    #             'query': query
-    #         }
-    #         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-    #         req = urllib.request.Request('http://exp-api:8000/search/', data=post_encoded, method='POST')
-    #         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    #         resp = json.loads(resp_json)
-    #         return render(request, 'marketplace/searchResults.html', post_data)
-    # else:
-    #     form = SearchForm()
+    post_data = {}
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['name']
+            post_data = {
+                'name': query
+            }
+            post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+            req = urllib.request.Request('http://exp-api:8000/search/', data=post_encoded, method='POST')
+            resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+            resp = json.loads(resp_json)
+            # return render(request, 'marketplace/searchResults.html', post_data)
+            return JsonResponse(resp, safe=False)
+    else:
+        form = SearchForm()
     # return render(request, 'marketplace/searchResults.html', post_data)
     return JsonResponse({'Error' : 'Web Layer'})
