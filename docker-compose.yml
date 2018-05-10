@@ -19,7 +19,7 @@ exp:
       - "8002:8000"
    volumes:
       - ./expLayer:/app
-   command: bash -c "python manage.py test expapp; mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/expLayer/wsgi.py"
+   command: bash -c "mod_wsgi-express start-server --working-directory /app --reload-on-changes /app/expLayer/wsgi.py"
 
 web:
    image: tp33/django
