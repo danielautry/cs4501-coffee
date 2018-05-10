@@ -174,26 +174,26 @@ def createProduct(request):
     except:
         return render(request, 'marketplace/error.html', error_data)
 
-@csrf_exempt
-def search(request):
-    # auth = request.COOKIES.get('auth')
-    # if not auth:
-    #     return HttpResponse("NO auth")
-    # query = ''
-    # post_data = {}
-    # if request.method == 'POST':
-    #     form = SearchForm(request.POST)
-    #     if form.is_valid():
-    #         query = form.cleaned_data['query']
-    #         post_data = {
-    #             'query': query
-    #         }
-    #         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-    #         req = urllib.request.Request('http://exp-api:8000/search/', data=post_encoded, method='POST')
-    #         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    #         resp = json.loads(resp_json)
-    #         return render(request, 'marketplace/searchResults.html', post_data)
-    # else:
-    #     form = SearchForm()
-    # return render(request, 'marketplace/searchResults.html', post_data)
-    return JsonResponse({'Error' : 'Web Layer'})
+# @csrf_exempt
+# def search(request):
+#     # auth = request.COOKIES.get('auth')
+#     # if not auth:
+#     #     return HttpResponse("NO auth")
+#     # query = ''
+#     # post_data = {}
+#     # if request.method == 'POST':
+#     #     form = SearchForm(request.POST)
+#     #     if form.is_valid():
+#     #         query = form.cleaned_data['query']
+#     #         post_data = {
+#     #             'query': query
+#     #         }
+#     #         post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+#     #         req = urllib.request.Request('http://exp-api:8000/search/', data=post_encoded, method='POST')
+#     #         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+#     #         resp = json.loads(resp_json)
+#     #         return render(request, 'marketplace/searchResults.html', post_data)
+#     # else:
+#     #     form = SearchForm()
+#     # return render(request, 'marketplace/searchResults.html', post_data)
+#     return JsonResponse({'Error' : 'Web Layer'})
