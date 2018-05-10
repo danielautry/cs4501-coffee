@@ -118,22 +118,24 @@ def createProduct(request):
 @csrf_exempt
 def search(request):
     es = Elasticsearch(['es'])
-    # query = ''
     post_data = {}
     if request.method == "POST":
         query = request.POST['name']
         post_data = {
             'name': query
         }
-        result = es.search(index='listing_index', body={'query': {'query_string': {'query': query}}, 'size': 10})
-        # print(result)
-        # print()
-        return JsonResponse(result, safe=False)
-    # # return HttpResponse("Not POST in EXP")
-    # # if request.method != "POST":
-	# es = Elasticsearch(['es'])
-    # query = query
-	# result = es.search(index = 'listing-indexer', body = {'query': {'query_string':{'query':searchTerm}}})
-	# # except Exception as e:
-	# searchResults = {}
+        try:
+            response = es.search(index='listing_index', body={'query': {'query_string': {'query': query}}, 'size': 10})
+            searchResults = response['hits']['hits']
+            productDictList = []
+            for i in range(len(searchResults)):
+                productDictList.append(searchResults[i]['_source'])
+
+            dumpJson = json.dumps(productDictList)
+            productJson = json.loads(dumpJson)
+        except:
+            return JsonResponse({
+                "Error" : "Product not found"
+            })
+        return JsonResponse(productJson, safe=False)
     return JsonResponse({'Error' : 'Exp Layer'})

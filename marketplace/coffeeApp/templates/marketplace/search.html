@@ -12,7 +12,7 @@
   </head>
    <body class="signup">
       <div class="container">
-      <form class="signup-main" name="form" action = "{% url "find" %}" method="post">
+      <form class="signup-main signup-search" name="form" action = "{% url "find" %}" method="post">
         {% csrf_token %}
         <h2 class="signup-title">Find A Product</h2>
         <div class="row">
@@ -25,9 +25,40 @@
           <button type="submit" value="submit" class="btn btn-primary form-submit">Search</button>
         </div>
       </form>
-      <div class="row results">
+      <!-- <div class="row results">
           <h2 class="search-title">Search Results</h2>
-      </div>
+      </div> -->
+
+      <script>
+
+      var productList = JSON.parse('{{ productList | escapejs }}');
+      // document.write("hello");
+      //var productList = {{productList|safe}};
+      //var div = document.createElement('divTest');
+      //div.textContent = 'Hello world.';
+      //if(document.body != null){
+      //document.body.appendChild(div);
+    //  }
+        //var toAdd = document.createDocumentFragment();
+      for(var i=0; i < 20; i++){
+        if(productList[i]){
+            var div = document.createElement('div');
+          //  div.id = 'r'+i;
+            //newDiv.className = 'ansbox';
+            productID = productList[i].id;
+            htmlString = "<a class='search-result' href = '/product/" + productID + "'>" + productList[i].product + ".........." + productList[i].price + "</a>";
+            div.style.textAlign = "center";
+            div.style.fontSize = "35px";
+            div.innerHTML = htmlString;
+            document.body.appendChild(div);
+            //toAdd.appendChild(newDiv);
+          }
+
+        }
+
+      //document.appendChild(toAdd);
+      </script>
+
     </div>
   </body>
   </html>
