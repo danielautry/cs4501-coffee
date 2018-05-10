@@ -8,6 +8,8 @@ from django.core import serializers
 import urllib.request
 import urllib.parse
 from django.views.decorators.csrf import csrf_exempt
+from elasticsearch import Elasticsearch
+from kafka import KafkaProducer
 
 def index(request):
     return HttpResponse("expLayer")
@@ -94,6 +96,7 @@ def logout(request):
 @csrf_exempt
 def createProduct(request):
     # dynamically making new ids
+    producer = KafkaProducer(bootstrap_servers='kafka:9092')
     if request.method == "POST":
         product = request.POST['product']
         price = request.POST['price']
@@ -108,6 +111,7 @@ def createProduct(request):
         req = urllib.request.Request('http://models-api:8000/product/create/', data=post_encoded, method='POST')
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
+        producer.send('new-product', json.dumps(resp).encode('utf-8'))
         return JsonResponse(resp, safe=False)
     return JsonResponse({'Error' : 'Exp Layer'})
 
@@ -123,13 +127,13 @@ def search(request):
         }
         result = es.search(index='listing_index', body={'query': {'query_string': {'query': query}}, 'size': 10})
         # print(result)
-        # print(es.[hits][hits])
-        return JsonResponse(post_data, safe=False)
+        # print()
+        return JsonResponse(result, safe=False)
     # # return HttpResponse("Not POST in EXP")
     # # if request.method != "POST":
 	# es = Elasticsearch(['es'])
-        # query = query
-    	# result = es.search(index = 'listing-indexer', body = {'query': {'query_string':{'query':searchTerm}}})
-    	# # except Exception as e:
-    	# searchResults = {}
+    # query = query
+	# result = es.search(index = 'listing-indexer', body = {'query': {'query_string':{'query':searchTerm}}})
+	# # except Exception as e:
+	# searchResults = {}
     return JsonResponse({'Error' : 'Exp Layer'})
