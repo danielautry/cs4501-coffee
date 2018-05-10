@@ -29,9 +29,9 @@ class CustomerTestCases(TestCase):
         responseCreate = self.client.post(reverse('createCustomer'), {'name' : 'Daniel', 'email' : 'hello@hello.com', 'cardNumber' : '1234', 'password' : 'test'})
         self.assertEqual(responseCreate.status_code, 200)
 
-    def login(self):
-        self.client.post(reverse('login', args={1}), {'email' : 'jh@dm.com', 'password' : 'test'})
-        self.assertContains(responseUpdate.status_code, '200')
+    def testLogin(self):
+        responseLogin = self.client.post(reverse('login'), {'email' : 'mscott@dm.com', 'password' : 'test'})
+        self.assertEqual(responseLogin.status_code, 200)
 
     def testDeleteCustomer(self):
         responseDelete = self.client.post(reverse('destroyCustomer', args={1}))

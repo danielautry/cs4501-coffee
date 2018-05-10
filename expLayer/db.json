@@ -1,0 +1,5 @@
+[{"model": "microapp.product", "pk": 1, "fields": {"product": "Apple Juice", "price": "$500", "sellerEmail": "Jeremy@little.com"}},
+{"model": "microapp.product", "pk": 2, "fields": {"product": "Beet Juice", "price": "$1,000", "sellerEmail": "Daniel@Autry.com"}},
+{"model": "microapp.product", "pk": 3, "fields": {"product": "$100 of Milk", "price": "$200", "sellerEmail": "Daniel@Autry.com"}},
+{"model": "microapp.customer", "pk": 1, "fields": {"name": "Jeremy Little", "email": "Jeremy@little.com", "cardNumber": "1234567812345678", "password": "pbkdf2_sha256$30000$yrZ3UcJi4JgH$2/FgNsqvfWr8RTBQPuz9wGoFBzrgTQIa5hz8EI8WYvc="}}, {"model": "microapp.customer", "pk": 2, "fields":
+{"name": "Daniel Autry", "email": "Daniel@Autry.com", "cardNumber": "1000200030004000", "password": "pbkdf2_sha256$30000$a6pTP5chLKkz$WP92d1ye3riszu4tV1cw42EgKaNJ8idQQc4bObwETDQ="}}]
