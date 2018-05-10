@@ -48,6 +48,15 @@ a {
   text-decoration: none;
 }
 
+.search-result {
+  color: white;
+  text-decoration: underline;
+}
+
+.signup-search {
+  margin-bottom: 50px !important;
+}
+
 .overlay-dark {
   position: absolute;
   width: 100%;
