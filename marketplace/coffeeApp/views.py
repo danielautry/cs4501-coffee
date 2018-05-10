@@ -143,7 +143,7 @@ def logout(request):
             response.delete_cookie("auth")
             return response
     except:
-        return render(request, 'marketplace/error.html', error_data)
+        return render(request, 'marketplace/indexMain.html')
 
 @csrf_exempt
 def createProduct(request):
