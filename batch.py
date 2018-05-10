@@ -4,6 +4,7 @@ from kafka import KafkaProducer
 import json
 import time
 
+# wait for kafka to boot up
 time.sleep(10)
 es = Elasticsearch(['es'])
 consumer = KafkaConsumer('new-product', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])

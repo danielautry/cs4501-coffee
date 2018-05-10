@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JD Coffee</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet"  type="text/css" href="{% static 'coffeeApp/style.css' %}"/>
+  <link href="https://fonts.googleapis.com/css?family=Playball|Satisfy|Tangerine|Yellowtail" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="products container-fluid">
+    <div class="overlay-dark-products">
+      <nav class="navbar">
+        <ul>
+          <li>JD Coffee</li>
+          <li><a href="/" class="u-colorWhite">Home</a></li>
+          <li><a href="/products/" class="u-colorWhite">Products</a></li>
+          <li><a href="/productForm/" class="u-colorWhite">Create Product</a></li>
+          <li><a href="/logout/" class="u-colorWhite">Logout</a></li>
+        </ul>
+      </nav>
+      <div class="jumbotron u-NoBackground products-title w-50">
+        <h1 class="display-4 u-colorWhite">The market of <b class="productive">Products.</b></h1>
+        <p class="lead u-colorWhite">One man's product is another man's product</b> </p>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="footer container-fluid">
+    <h2 class="footer-title"><b>JD Coffee</b></h2><h2 class="footer-title text-right">109 Shamrock Rd, Charlottesville, VA, 22903</h2>
+  </div>
+</body>
+</html>

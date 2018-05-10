@@ -126,14 +126,14 @@ def search(request):
             'name': query
         }
         result = es.search(index='listing_index', body={'query': {'query_string': {'query': query}}, 'size': 10})
+        # print(result)
         # print(es.[hits][hits])
         return JsonResponse(post_data, safe=False)
     # # return HttpResponse("Not POST in EXP")
     # # if request.method != "POST":
 	# es = Elasticsearch(['es'])
-    # query = query
-	# result = es.search(index = 'listing-indexer', body = {'query': {'query_string':{'query':searchTerm}}})
-	# # except Exception as e:
-	# # 	return _error_response(request, "Listing failed.")
-	# searchResults = []
+        # query = query
+    	# result = es.search(index = 'listing-indexer', body = {'query': {'query_string':{'query':searchTerm}}})
+    	# # except Exception as e:
+    	# searchResults = {}
     return JsonResponse({'Error' : 'Exp Layer'})
